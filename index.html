@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Joshua Tree At-a-Glance Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Sandstone -->
+    <!-- Application Structure Plan: A single-page dashboard with a persistent top navigation bar for filtering content. The main content area displays location details in a scannable card format. This structure was chosen for its intuitive, mobile-friendly design that allows users to quickly find relevant information without scrolling through the entire guide, directly supporting the "at-a-glance" purpose of the source material. -->
+    <!-- Visualization & Content Choices: The guide's text-based content is presented using structured HTML and styled with Tailwind CSS. No data charts are necessary. The primary interactions are JavaScript-powered filters triggered by navigation clicks. This method directly translates the document's sections into an interactive user experience, allowing for easy exploration and comparison of locations. Icons are rendered using Unicode emojis to maintain the source's friendly aesthetic. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #FDF6E3; /* Warm Sandstone base */
+            color: #586e75;
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        .nav-btn.active {
+            background-color: #D2691E; /* Chocolate */
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .location-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fdfdfd;
+        }
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .pro-tips {
+            background-color: #EEE8D5; /* A slightly darker sandstone for contrast */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">🌵 The Joshua Tree At-a-Glance Guide 🌵</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Welcome to your ultimate guide for an unforgettable desert adventure! We're focused on the most unique and exciting experiences that don't require hiking boots—from quirky art installations and relaxing sound baths to incredible scenic drives and delicious local eats.
+            </p>
+        </header>
+
+        <section class="pro-tips p-6 rounded-2xl mb-10 shadow-md">
+            <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">✨ Pro-Tips for Your Adventure ✨</h2>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                <li><strong>Time Your Fun:</strong> Plan outdoor adventures for cooler parts of the day—before 10 am and after 4 pm. Use midday heat to explore the awesome indoor spots!</li>
+                <li><strong>Hydration is Key:</strong> The golden rule is **one gallon of water per person, per day.** Pack salty snacks to stay energized.</li>
+                <li><strong>Be Your Own Tour Guide:</strong> Before you lose service, download the official **NPS App** for its fantastic self-guided audio tour.</li>
+                <li><strong>Plan for Peak Starlight:</strong> Joshua Tree is a world-class Dark Sky Park. Check the moon phase for your visit—a new moon means breathtaking views of the Milky Way.</li>
+                <li><strong>Dress for Success:</strong> Wear lightweight, long-sleeved shirts. A wide-brimmed hat and sunglasses are essential. Pack layers for surprisingly cool nights.</li>
+                <li><strong>Plan for Zero Service:</strong> Download maps and this guide offline. Leave a detailed itinerary with someone back home.</li>
+                <li><strong>Chat with a Ranger:</strong> Check visitor center bulletin boards for free "Ranger Talks" for amazing insights.</li>
+                <li><strong>Watch for Your Neighbors:</strong> Your hub is where town meets wild. Expect wildlife like coyotes at dawn and dusk. Keep a respectful distance and never leave food outside.</li>
+            </ul>
+        </section>
+
+        <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-4 rounded-2xl shadow-lg mb-8">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="nav-btn active px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="all">All Locations</button>
+                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="part1">🧘 Serene & Indoor</button>
+                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="part2">🌄 Outdoor Adventures</button>
+                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="dining">🍽️ Dining</button>
+                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="shops">🛍️ Shops</button>
+                 <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="art">🎨 Art</button>
+            </div>
+        </nav>
+        
+        <main id="locations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Location cards will be dynamically inserted here -->
+        </main>
+    </div>
+
+    <script>
+        const locationsData = [
+            {
+                name: "Hi-Desert Nature Museum",
+                part: "part1",
+                category: "cultural",
+                travelTime: "~15 mins from hub.",
+                whatItIs: "A super fun crash course in the desert's secrets! Unlock the mysteries of the quirky plants, cool animals, and unique geology that make this place so special.",
+                perfectFor: "Families & curious minds.",
+                knowBeforeYouGo: "Open Wed-Sat 10am-5pm | Free!",
+                insiderTip: "Pair it with a treasure hunt through the antique shops in Old Town Yucca Valley for a perfect afternoon two-fer!"
+            },
+            {
+                name: "Joshua Tree Visitor & Cultural Center",
+                part: "part1",
+                category: "cultural",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "Mission control for your adventure! This is your essential first stop, featuring a fantastic museum that honors the region's Native American history.",
+                perfectFor: "Literally everyone.",
+                knowBeforeYouGo: "Open Daily 8am-5pm | Free!",
+                insiderTip: "Spend an hour in the museum *before* you enter the park. The context it provides will completely change how you see the landscape."
+            },
+            {
+                name: "29 Palms Art Gallery",
+                part: "part1",
+                category: "cultural art",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "Step into the heart of the desert's art scene! The oldest gallery in the area, housed in a charming, historic adobe building.",
+                perfectFor: "Art lovers and history buffs.",
+                knowBeforeYouGo: "Open Fri-Sun 11am-3pm (more hours Sep-Jun) | Free!",
+                insiderTip: "Check their schedule for a monthly artist reception. It's a fantastic chance to mingle with local creatives."
+            },
+            {
+                name: "Cabot's Pueblo Museum",
+                part: "part1",
+                category: "cultural",
+                travelTime: "~45 mins from hub.",
+                whatItIs: "A jaw-dropping masterpiece of ingenuity! Explore a massive, multi-level pueblo hand-built by a local pioneer from reclaimed materials.",
+                perfectFor: "Anyone who loves unique architecture and incredible stories.",
+                knowBeforeYouGo: "Open Tue-Sun (hours vary) | ~$13-16 admission.",
+                insiderTip: "**Absolutely take the guided tour.** The docents tell wild stories about the founder's adventurous life that you won't get anywhere else."
+            },
+            {
+                name: "Beauty Bubble Salon & Museum",
+                part: "part1",
+                category: "shops",
+                travelTime: "~5 mins from hub.",
+                whatItIs: "A fabulously kitschy spot that's a working salon *and* a museum packed with 3,000+ pieces of vintage beauty gear.",
+                perfectFor: "Lovers of pop culture, retro style, and wonderfully weird photo ops.",
+                knowBeforeYouGo: "Hours vary (call ahead) | Free to browse.",
+                insiderTip: "Even if you’re not getting a beehive hairdo, pop in! The owner loves to share the hilarious stories behind his collection."
+            },
+            {
+                name: "World Famous Crochet Museum",
+                part: "part1",
+                category: "art shops",
+                travelTime: "~5 mins from hub.",
+                whatItIs: "A tiny, acid-green photo booth transformed into a wonderfully bizarre museum dedicated to all things crochet.",
+                perfectFor: "A quick, hilarious, and supremely quirky photo op.",
+                knowBeforeYouGo: "Always open to peek into! | Free.",
+                insiderTip: "The museum is part of the 'Art Queen' complex, so explore the other quirky art installations on the same lot."
+            },
+            {
+                name: "Hoof & The Horn",
+                part: "part1",
+                category: "shops",
+                travelTime: "~5 mins from hub.",
+                whatItIs: "A beautifully curated boutique that perfectly captures the modern desert-boho aesthetic.",
+                perfectFor: "Finding that perfect, stylish souvenir or a unique piece of desert-inspired fashion.",
+                knowBeforeYouGo: "Open daily.",
+                insiderTip: "A great place to find high-quality, locally designed t-shirts that go way beyond typical tourist gear."
+            },
+            {
+                name: "Rainbow Stew",
+                part: "part1",
+                category: "shops",
+                travelTime: "~15 mins from hub.",
+                whatItIs: "The epicenter of the 'Hi-Desert' vibe. A magical shop filled with crystals, sage, and a huge collection of local art.",
+                perfectFor: "Finding unique, spiritual gifts and soaking in the local culture.",
+                knowBeforeYouGo: "Open Daily (hours vary).",
+                insiderTip: "Ask the staff about the local artists. Their stories add a personal connection to every piece."
+            },
+            {
+                name: "The End",
+                part: "part1",
+                category: "shops",
+                travelTime: "~15 mins from hub.",
+                whatItIs: "A legendary vintage store known for its amazing, curated collection of retro clothing and accessories.",
+                perfectFor: "Treasure hunters looking for unique, one-of-a-kind vintage finds.",
+                knowBeforeYouGo: "Check their social media for current hours.",
+                insiderTip: "Give yourself plenty of time to dig! The racks are packed with amazing pieces waiting to be discovered."
+            },
+            {
+                name: "Sky's The Limit Observatory",
+                part: "part1",
+                category: "stargazing",
+                travelTime: "~15 mins from hub.",
+                whatItIs: "Your personal journey through the cosmos! Peer through powerful telescopes to see distant galaxies and sparkling star clusters.",
+                perfectFor: "A comfy, mind-blowing stargazing adventure for all.",
+                knowBeforeYouGo: "Grounds always open | Monthly star parties require tickets.",
+                insiderTip: "Visit during the day and use the QR codes on-site for a fun, self-guided audio tour of the walkable solar system model!"
+            },
+            {
+                name: "The Integratron",
+                part: "part1",
+                category: "stargazing",
+                travelTime: "~25 mins from hub.",
+                whatItIs: "An experience you'll talk about forever. Relax in a world-famous, acoustically perfect dome for an unforgettable 'Sound Bath.'",
+                perfectFor: "Anyone seeking deep relaxation or a truly unique experience.",
+                knowBeforeYouGo: "Open Thu-Sun | ~$55/person | **Reservations are essential and sell out MONTHS in advance.**",
+                insiderTip: "Can't get a ticket? You can often still visit the grounds to see the incredible structure from the outside."
+            },
+            {
+                name: "29 Palms Creative Center",
+                part: "part1",
+                category: "workshops art",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "Unleash your inner artist! Offers fun, one-off classes like pottery and painting in a cool, air-conditioned studio.",
+                perfectFor: "A unique, hands-on souvenir-making session.",
+                knowBeforeYouGo: "By appointment only | Costs vary ($45+).",
+                insiderTip: "For a memorable group activity, book a private 'Neon Black Light Painting Party'!"
+            },
+            {
+                name: "MazAmar Art Pottery",
+                part: "part1",
+                category: "workshops art",
+                travelTime: "~25 mins from hub.",
+                whatItIs: "A working pottery studio on Pioneertown's iconic Mane Street, famous for their 'Joshua Tree Mugs'.",
+                perfectFor: "Taking a fun, accessible pottery class in a truly unique Old West setting.",
+                knowBeforeYouGo: "Studio store open daily | Classes must be scheduled in advance.",
+                insiderTip: "Book a class well in advance, especially for a weekend, then browse the gallery."
+            },
+            {
+                name: "Joshua Tree Coffee Company",
+                part: "part1",
+                category: "dining",
+                travelTime: "~5 mins from hub.",
+                whatItIs: "The legendary local spot for amazing, small-batch organic coffee. The line is a testament to how good it is!",
+                perfectFor: "The perfect morning kickstart.",
+                knowBeforeYouGo: "Open daily, morning/afternoon hours.",
+                insiderTip: "The line moves fast and is totally worth it. Grab a bag of their whole beans to take the taste of Joshua Tree home with you."
+            },
+            {
+                name: "Joshua Tree Saloon",
+                part: "part1",
+                category: "dining",
+                travelTime: "~5 mins from hub.",
+                whatItIs: "The perfect post-adventure refuel spot! A classic Old West saloon serving up hearty burgers and cold beer.",
+                perfectFor: "A fun, casual meal with a classic desert vibe.",
+                knowBeforeYouGo: "Open daily, late hours | Mid-range.",
+                insiderTip: "You can't go wrong with the Mineshaft Burger and a pint of their own Prickly Pear Blond Ale!"
+            },
+             {
+                name: "The Copper Room",
+                part: "part1",
+                category: "dining",
+                travelTime: "~15 mins from hub.",
+                whatItIs: "A trip back in time! A restored 1950s lounge with swanky cocktails and a prime view overlooking the Yucca Valley Airport runway.",
+                perfectFor: "A historic, retro-themed dinner with a cinematic twist.",
+                knowBeforeYouGo: "Open Daily 4pm-10pm | Reservations highly recommended.",
+                insiderTip: "Request a runway view when booking to watch small planes take off against a dramatic desert sunset."
+            },
+            {
+                name: "29 Palms Inn",
+                part: "part1",
+                category: "dining",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "Dinner in a literal oasis. This historic inn offers an upscale meal in a lush, romantic garden, often with live music.",
+                perfectFor: "A romantic dinner or a special occasion.",
+                knowBeforeYouGo: "Open Wed-Sun for dinner | Reservations highly recommended.",
+                insiderTip: "Arrive before sunset to wander the beautiful grounds and the adjacent Oasis of Mara."
+            },
+            {
+                name: "La Copine Kitchen",
+                part: "part1",
+                category: "dining",
+                travelTime: "~25 mins from hub.",
+                whatItIs: "A culinary pilgrimage! This nationally acclaimed restaurant serves an inventive menu that's 100% worth the drive.",
+                perfectFor: "Foodies looking for an unforgettable meal.",
+                knowBeforeYouGo: "Open Thu-Sun 11am-4pm | No reservations.",
+                insiderTip: "To minimize the wait, go on a Thursday or arrive right when they open."
+            },
+            {
+                name: "Pappy & Harriet's Pioneertown Palace",
+                part: "part1",
+                category: "dining",
+                travelTime: "~25 mins from hub.",
+                whatItIs: "One of the most famous desert venues in the world. A legendary BBQ joint and live music spot.",
+                perfectFor: "A rowdy, fun night of great food, live music, and authentic desert culture.",
+                knowBeforeYouGo: "Open Thu-Sun | Dinner reservations and advance music tickets are essential.",
+                insiderTip: "Even without show tickets, you can often grab a drink at the bar and soak in the historic atmosphere."
+            },
+            {
+                name: "Noah Purifoy Outdoor Desert Art Museum",
+                part: "part2",
+                category: "art",
+                travelTime: "~10 mins from hub.",
+                whatItIs: "A sprawling 10-acre wonderland of thought-provoking sculptures built entirely from junk and found objects.",
+                perfectFor: "Art lovers and curious explorers.",
+                knowBeforeYouGo: "Open Daily, sunrise to sunset | Free (donations welcome!).",
+                insiderTip: "Don't look for explanation signs. The artist wanted you to have your *own* unique reaction to his incredible work."
+            },
+            {
+                name: "Desert Christ Park",
+                part: "part2",
+                category: "art",
+                travelTime: "~15 mins from hub.",
+                whatItIs: "A unique park overlooking Yucca Valley, featuring over 40 large, snow-white sculptures depicting scenes from the life of Christ.",
+                perfectFor: "Those who love roadside attractions, folk art, and unique cultural landmarks.",
+                knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations welcome).",
+                insiderTip: "Visit in the late afternoon when the low sun creates dramatic shadows on the sculptures."
+            },
+            {
+                name: "Oasis of Murals (Self-Guided Tour)",
+                part: "part2",
+                category: "art",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "An art safari in your car! Hunt for over 26 massive murals that tell the story of the region's history.",
+                perfectFor: "A flexible driving tour on a hot or windy day.",
+                knowBeforeYouGo: "Viewable anytime | Free.",
+                insiderTip: "Grab a physical map from the Visitor Center for the fascinating history behind each mural."
+            },
+            {
+                name: "The Glass Outhouse Art Gallery",
+                part: "part2",
+                category: "art",
+                travelTime: "~30 mins from hub.",
+                whatItIs: "A whimsical outdoor playground of surreal, humorous folk art, complete with a functional outhouse made of one-way mirrors.",
+                perfectFor: "Anyone who loves quirky art and fantastic photo ops.",
+                knowBeforeYouGo: "Outdoor art is always accessible | Free.",
+                insiderTip: "If you see the owner, say hello! She has fascinating stories about creating this beloved local landmark."
+            },
+            {
+                name: "Salvation Mountain",
+                part: "part2",
+                category: "art",
+                travelTime: "~1 hour 45 mins from hub.",
+                whatItIs: "A mind-blowing explosion of color and devotion! A massive, man-made mountain of adobe and paint.",
+                perfectFor: "Lovers of folk art, surreal landscapes, and unforgettable photo ops.",
+                knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations are vital!).",
+                insiderTip: "This is a significant drive, best planned as a full day trip. Bring plenty of water and sun protection."
+            },
+            {
+                name: "Morongo Valley-Big Morongo Canyon Preserve",
+                part: "part2",
+                category: "vistas",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "A lush, green oasis that's a world away from the desert. A bird-watching paradise with accessible, shaded boardwalk trails.",
+                perfectFor: "A relaxing, cool, and easy nature walk, especially on a warm day.",
+                knowBeforeYouGo: "Open daily, 7:30 am to sunset | Free (donations appreciated).",
+                insiderTip: "Bring binoculars! This is one of the best birding spots in California."
+            },
+            {
+                name: "Skull Rock",
+                part: "part2",
+                category: "vistas",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "The park's most famous rock star! Wind and rain have carved this boulder into an uncanny resemblance of a human skull.",
+                perfectFor: "A quick, classic photo op that's a must-do.",
+                knowBeforeYouGo: "Located right off Park Boulevard | Park entrance fee required.",
+                insiderTip: "Parking is tight. If full, park at Jumbo Rocks Campground and take a very short walk."
+            },
+            {
+                name: "Pioneertown",
+                part: "part2",
+                category: "vistas",
+                travelTime: "~25 mins from hub.",
+                whatItIs: "A real 1880s Old West movie set you can walk through, featuring classic storefronts and fun shops.",
+                perfectFor: "History buffs, film lovers, and music fans.",
+                knowBeforeYouGo: "Mane Street is always open | Free to visit.",
+                insiderTip: "Visit on a weekend for the liveliest atmosphere and a possible Wild West show!"
+            },
+            {
+                name: "Keys View",
+                part: "part2",
+                category: "vistas",
+                travelTime: "~40 mins from hub.",
+                whatItIs: "The ultimate panorama! Drive up for a breathtaking view of the entire Coachella Valley and the San Andreas Fault.",
+                perfectFor: "Everyone. The paved loop makes this incredible view accessible to all.",
+                knowBeforeYouGo: "Open 24/7 (road permitting) | Park entrance fee required.",
+                insiderTip: "It's *always* colder and windier up here. Bring an extra layer, even on a warm day."
+            },
+            {
+                name: "Palm Springs Aerial Tramway",
+                part: "part2",
+                category: "vistas",
+                travelTime: "~45 mins from hub.",
+                whatItIs: "Ride the world's largest rotating tram car up the sheer cliffs of Chino Canyon. The views are spectacular.",
+                perfectFor: "Epic views, escaping the desert heat, and a truly unique experience.",
+                knowBeforeYouGo: "Open daily | Tickets are ~$40/person | Book in advance.",
+                insiderTip: "The temperature at the top is often 30-40 degrees cooler than the desert floor. Bring a jacket!"
+            },
+            {
+                name: "Cholla Cactus Garden",
+                part: "part2",
+                category: "vistas",
+                travelTime: "~45 mins from hub.",
+                whatItIs: "A beautiful and slightly dangerous cactus forest! Filled with 'teddy bear cholla,' but be warned—their spines detach easily.",
+                perfectFor: "Photographers and thrill-seekers. **WARNING: DO NOT TOUCH THE CACTI.**",
+                knowBeforeYouGo: "Open 24/7 | Park entrance fee required. Wear closed-toed shoes.",
+                insiderTip: "**Go at sunrise or sunset.** The low-angle light makes the cactus spines glow as if they're lit from within."
+            },
+            {
+                name: "Horseback Riding",
+                part: "part2",
+                category: "excursions",
+                travelTime: "~20 mins from hub.",
+                whatItIs: "Saddle up, partner! See the Mojave Desert like a real cowboy on a guided tour.",
+                perfectFor: "A memorable adventure for all skill levels.",
+                knowBeforeYouGo: "Local ranches offer guided tours. Book in advance.",
+                insiderTip: "A sunset ride is an absolutely magical experience, offering incredible views and photo opportunities."
+            },
+            {
+                name: "Offroading Adventure",
+                part: "part2",
+                category: "excursions",
+                travelTime: "Varies based on trail entrance.",
+                whatItIs: "Explore the park's rugged backcountry on wheels! A 4x4 adventure lets you discover remote dirt roads.",
+                perfectFor: "Adventure seekers who want to get off the beaten path.",
+                knowBeforeYouGo: "Many dirt roads are open to 4-wheel drive vehicles. Tours are available.",
+                insiderTip: "Before you go, make sure your vehicle's tank is full and your tires are in good shape. Always have extra water in the car."
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('locations-grid');
+            const nav = document.getElementById('navigation');
+            const navButtons = nav.querySelectorAll('.nav-btn');
+
+            const renderLocations = (filter) => {
+                grid.innerHTML = '';
+                let filteredData = locationsData;
+
+                if (filter !== 'all') {
+                    filteredData = locationsData.filter(loc => loc.part === filter || loc.category.includes(filter));
+                }
+                
+                // Sort by travel time (parsing the number from the string)
+                filteredData.sort((a, b) => {
+                    const timeA = parseInt(a.travelTime.replace(/[^0-9]/g, '')) || 0;
+                    const timeB = parseInt(b.travelTime.replace(/[^0-9]/g, '')) || 0;
+                    return timeA - timeB;
+                });
+
+                filteredData.forEach(loc => {
+                    const card = `
+                        <div class="location-card flex flex-col border border-gray-200 rounded-2xl p-6 shadow-sm overflow-hidden" data-part="${loc.part}" data-category="${loc.category}">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">${loc.name}</h3>
+                            <div class="space-y-3 text-gray-600 flex-grow">
+                                <p><strong class="text-gray-800">🚗 Travel Time:</strong> ${loc.travelTime}</p>
+                                <p><strong class="text-gray-800">🤔 What it is:</strong> ${loc.whatItIs}</p>
+                                <p><strong class="text-gray-800">🎯 Perfect for:</strong> ${loc.perfectFor}</p>
+                                <p><strong class="text-gray-800">📋 Know before you go:</strong> ${loc.knowBeforeYouGo}</p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-sm text-gray-500"><strong class="text-gray-700">💡 Insider Tip:</strong> ${loc.insiderTip}</p>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += card;
+                });
+            };
+
+            nav.addEventListener('click', (e) => {
+                if (e.target.matches('.nav-btn')) {
+                    const filter = e.target.dataset.filter;
+                    
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+
+                    renderLocations(filter);
+                }
+            });
+
+            // Initial render
+            renderLocations('all');
+        });
+    </script>
+</body>
+</html>
