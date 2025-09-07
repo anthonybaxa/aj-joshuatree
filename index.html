@@ -167,8 +167,11 @@
         <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
             <div class="flex flex-wrap justify-center gap-2">
                 <button class="nav-btn active px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="all">All Locations</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="local">📍 Hyper-Local Gems</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="daytrip">🗺️ Epic Day Trips</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Art & Culture">🎨 Art & Culture</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Dining & Shopping">🛍️ Dining & Shopping</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Scenic & Nature">🌄 Scenic & Nature</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="History & Landmarks">🏛️ History & Landmarks</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Unique Experiences">✨ Unique Experiences</button>
             </div>
         </nav>
         
@@ -181,7 +184,7 @@
         const locationsData = [
             {
                 name: "Beauty Bubble Salon & Museum",
-                part: "local",
+                tags: ["Dining & Shopping", "Unique Experiences"],
                 travelTime: "~5 mins",
                 direction: "W",
                 whatItIs: "A fabulously kitschy spot that's a working salon <em>and</em> a museum packed with 3,000+ pieces of vintage beauty gear.",
@@ -191,7 +194,7 @@
             },
             {
                 name: "World Famous Crochet Museum",
-                part: "local",
+                tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~5 mins",
                 direction: "W",
                 whatItIs: "A tiny, acid-green photo booth transformed into a wonderfully bizarre museum dedicated to all things crochet.",
@@ -201,7 +204,7 @@
             },
             {
                 name: "Joshua Tree Coffee Company",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~5 mins",
                 direction: "W",
                 whatItIs: "The legendary local spot for amazing, small-batch organic coffee. The line is a testament to how good it is!",
@@ -211,7 +214,7 @@
             },
             {
                 name: "Joshua Tree Saloon",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~5 mins",
                 direction: "W",
                 whatItIs: "The perfect post-adventure refuel spot! A classic Old West saloon serving up hearty burgers and cold beer.",
@@ -221,7 +224,7 @@
             },
             {
                 name: "Hoof & The Horn",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~5 mins",
                 direction: "W",
                 whatItIs: "A beautifully curated boutique that perfectly captures the modern desert-boho aesthetic.",
@@ -231,7 +234,7 @@
             },
             {
                 name: "Noah Purifoy Outdoor Desert Art Museum",
-                part: "local",
+                tags: ["Art & Culture"],
                 travelTime: "~10 mins",
                 direction: "N",
                 whatItIs: "A sprawling 10-acre wonderland of thought-provoking sculptures built entirely from junk and found objects.",
@@ -241,7 +244,7 @@
             },
             {
                 name: "Hi-Desert Nature Museum",
-                part: "local",
+                tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~15 mins",
                 direction: "W",
                 whatItIs: "A super fun crash course in the desert's secrets! Unlock the mysteries of the quirky plants, cool animals, and unique geology that make this place so special.",
@@ -251,7 +254,7 @@
             },
             {
                 name: "Desert Christ Park",
-                part: "local",
+                tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~15 mins",
                 direction: "W",
                 whatItIs: "A unique park overlooking Yucca Valley, featuring over 40 large, snow-white sculptures depicting scenes from the life of Christ.",
@@ -261,7 +264,7 @@
             },
             {
                 name: "The Copper Room",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~15 mins",
                 direction: "W",
                 whatItIs: "A trip back in time! A restored 1950s lounge with swanky cocktails and a prime view overlooking the Yucca Valley Airport runway.",
@@ -271,7 +274,7 @@
             },
             {
                 name: "Rainbow Stew",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~15 mins",
                 direction: "W",
                 whatItIs: "The epicenter of the 'Hi-Desert' vibe. A magical shop filled with crystals, sage, and a huge collection of local art.",
@@ -281,7 +284,7 @@
             },
             {
                 name: "The End",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~15 mins",
                 direction: "W",
                 whatItIs: "A legendary vintage store known for its amazing, curated collection of retro clothing and accessories.",
@@ -291,7 +294,7 @@
             },
             {
                 name: "Sky's The Limit Observatory",
-                part: "local",
+                tags: ["Unique Experiences", "Scenic & Nature"],
                 travelTime: "~15 mins",
                 direction: "E",
                 whatItIs: "Your personal journey through the cosmos! Peer through powerful telescopes to see distant galaxies and sparkling star clusters.",
@@ -301,7 +304,7 @@
             },
             {
                 name: "Joshua Tree Visitor & Cultural Center",
-                part: "local",
+                tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~20 mins",
                 direction: "E",
                 whatItIs: "Mission control for your adventure! This is your essential first stop, featuring a fantastic museum that honors the region's Native American history.",
@@ -311,7 +314,7 @@
             },
             {
                 name: "29 Palms Art Gallery",
-                part: "local",
+                tags: ["Art & Culture"],
                 travelTime: "~20 mins",
                 direction: "E",
                 whatItIs: "Step into the heart of the desert's art scene! The oldest gallery in the area, housed in a charming, historic adobe building.",
@@ -321,7 +324,7 @@
             },
             {
                 name: "29 Palms Creative Center",
-                part: "local",
+                tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~20 mins",
                 direction: "E",
                 whatItIs: "Unleash your inner artist! Offers fun, one-off classes like pottery and painting in a cool, air-conditioned studio.",
@@ -331,7 +334,7 @@
             },
             {
                 name: "29 Palms Inn",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~20 mins",
                 direction: "E",
                 whatItIs: "Dinner in a literal oasis. This historic inn offers an upscale meal in a lush, romantic garden, often with live music.",
@@ -341,7 +344,7 @@
             },
             {
                 name: "Oasis of Murals (Self-Guided Tour)",
-                part: "local",
+                tags: ["Art & Culture"],
                 travelTime: "~20 mins",
                 direction: "E",
                 whatItIs: "An art safari in your car! Hunt for over 26 massive murals that tell the story of the region's history.",
@@ -351,7 +354,7 @@
             },
             {
                 name: "Big Morongo Canyon Preserve",
-                part: "local",
+                tags: ["Scenic & Nature"],
                 travelTime: "~20 mins",
                 direction: "W",
                 whatItIs: "A lush, green oasis that's a world away from the desert. A bird-watching paradise with accessible, shaded boardwalk trails.",
@@ -361,7 +364,7 @@
             },
             {
                 name: "Skull Rock",
-                part: "local",
+                tags: ["Scenic & Nature"],
                 travelTime: "~20 mins",
                 direction: "S",
                 whatItIs: "The park's most famous rock star! Wind and rain have carved this boulder into an uncanny resemblance of a human skull.",
@@ -371,7 +374,7 @@
             },
             {
                 name: "Horseback Riding",
-                part: "local",
+                tags: ["Unique Experiences"],
                 travelTime: "~20 mins",
                 direction: "W",
                 whatItIs: "Saddle up, partner! See the Mojave Desert like a real cowboy on a guided tour.",
@@ -381,7 +384,7 @@
             },
             {
                 name: "The Integratron",
-                part: "local",
+                tags: ["Unique Experiences"],
                 travelTime: "~25 mins",
                 direction: "NW",
                 whatItIs: "An experience you'll talk about forever. Relax in a world-famous, acoustically perfect dome for an unforgettable 'Sound Bath.'",
@@ -391,7 +394,7 @@
             },
             {
                 name: "MazAmar Art Pottery",
-                part: "local",
+                tags: ["Dining & Shopping", "Art & Culture"],
                 travelTime: "~25 mins",
                 direction: "NW",
                 whatItIs: "A working pottery studio on Pioneertown's iconic Mane Street, famous for their 'Joshua Tree Mugs'.",
@@ -401,7 +404,7 @@
             },
             {
                 name: "La Copine Kitchen",
-                part: "local",
+                tags: ["Dining & Shopping"],
                 travelTime: "~25 mins",
                 direction: "NW",
                 whatItIs: "A culinary pilgrimage! This nationally acclaimed restaurant serves an inventive menu that's 100% worth the drive.",
@@ -411,7 +414,7 @@
             },
             {
                 name: "Pappy & Harriet's Pioneertown Palace",
-                part: "local",
+                tags: ["Dining & Shopping", "Unique Experiences"],
                 travelTime: "~25 mins",
                 direction: "NW",
                 whatItIs: "One of the most famous desert venues in the world. A legendary BBQ joint and live music spot.",
@@ -421,7 +424,7 @@
             },
             {
                 name: "Pioneertown",
-                part: "local",
+                tags: ["History & Landmarks", "Unique Experiences"],
                 travelTime: "~25 mins",
                 direction: "NW",
                 whatItIs: "A real 1880s Old West movie set you can walk through, featuring classic storefronts and fun shops.",
@@ -431,7 +434,7 @@
             },
             {
                 name: "The Glass Outhouse Art Gallery",
-                part: "local",
+                tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~30 mins",
                 direction: "E",
                 whatItIs: "A whimsical outdoor playground of surreal, humorous folk art, complete with a functional outhouse made of one-way mirrors.",
@@ -441,7 +444,7 @@
             },
             {
                 name: "Keys View",
-                part: "local",
+                tags: ["Scenic & Nature"],
                 travelTime: "~40 mins",
                 direction: "S",
                 whatItIs: "The ultimate panorama! Drive up for a breathtaking view of the entire Coachella Valley and the San Andreas Fault.",
@@ -451,7 +454,7 @@
             },
             {
                 name: "Cabot's Pueblo Museum",
-                part: "local",
+                tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~45 mins",
                 direction: "SW",
                 whatItIs: "A jaw-dropping masterpiece of ingenuity! Explore a massive, multi-level pueblo hand-built by a local pioneer from reclaimed materials.",
@@ -461,7 +464,7 @@
             },
             {
                 name: "Cholla Cactus Garden",
-                part: "local",
+                tags: ["Scenic & Nature"],
                 travelTime: "~45 mins",
                 direction: "SE",
                 whatItIs: "A beautiful and slightly dangerous cactus forest! Filled with 'teddy bear cholla,' but be warned—their spines detach easily.",
@@ -471,7 +474,7 @@
             },
             {
                 name: "Offroading Adventure",
-                part: "local",
+                tags: ["Unique Experiences"],
                 travelTime: "Varies",
                 direction: "",
                 whatItIs: "Explore the park's rugged backcountry on wheels! A 4x4 adventure lets you discover remote dirt roads.",
@@ -481,7 +484,7 @@
             },
             {
                 name: "Cabazon Dinosaurs & Desert Hills Outlets",
-                part: "daytrip",
+                tags: ["Unique Experiences", "Dining & Shopping"],
                 travelTime: "~1 hour",
                 direction: "W",
                 whatItIs: "A classic California roadside attraction! Take photos with the massive, iconic T-Rex and Brontosaurus sculptures.",
@@ -491,7 +494,7 @@
             },
             {
                 name: "Palm Springs Air Museum",
-                part: "daytrip",
+                tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~1 hour",
                 direction: "W",
                 whatItIs: "A world-class aviation museum featuring one of the largest collections of flyable WWII aircraft in the world.",
@@ -501,7 +504,7 @@
             },
             {
                 name: "Downtown Palm Springs & Moorten Botanical Garden",
-                part: "daytrip",
+                tags: ["Dining & Shopping", "Scenic & Nature"],
                 travelTime: "~1 hour",
                 direction: "W",
                 whatItIs: "A perfect one-two punch of city and nature. Explore chic boutiques and mid-century modern architecture, then visit the charming 'Cactarium'.",
@@ -511,7 +514,7 @@
             },
             {
                 name: "Palm Springs Aerial Tramway",
-                part: "daytrip",
+                tags: ["Scenic & Nature", "Unique Experiences"],
                 travelTime: "~1 hour",
                 direction: "W",
                 whatItIs: "Ride the world's largest rotating tram car up the sheer cliffs of Chino Canyon. The views are spectacular.",
@@ -521,7 +524,7 @@
             },
             {
                 name: "The Living Desert Zoo & Sunnylands",
-                part: "daytrip",
+                tags: ["Scenic & Nature", "Art & Culture"],
                 travelTime: "~1 hour 15 mins",
                 direction: "SW",
                 whatItIs: "A trifecta of attractions. See desert animals at the Zoo, window-shop on El Paseo, and tour the stunning Sunnylands estate.",
@@ -531,7 +534,7 @@
             },
             {
                 name: "Idyllwild",
-                part: "daytrip",
+                tags: ["Scenic & Nature", "Dining & Shopping"],
                 travelTime: "~1 hour 15 mins",
                 direction: "W",
                 whatItIs: "Escape the desert heat by driving up into the mountains to this artsy, quiet village nestled in the pines.",
@@ -541,7 +544,7 @@
             },
             {
                 name: "Amboy Crater & Roy's Motel",
-                part: "daytrip",
+                tags: ["History & Landmarks", "Unique Experiences"],
                 travelTime: "~1 hour 30 mins",
                 direction: "E",
                 whatItIs: "A perfectly preserved slice of iconic Route 66 history. Roy's Motel and Café is a legendary photo op.",
@@ -551,7 +554,7 @@
             },
             {
                 name: "Calico Ghost Town",
-                part: "daytrip",
+                tags: ["History & Landmarks", "Unique Experiences"],
                 travelTime: "~1 hour 45 mins",
                 direction: "NE",
                 whatItIs: "A real 1880s silver mining town restored as a family-friendly attraction with gunfights, mine tours, and Old West shops.",
@@ -561,7 +564,7 @@
             },
             {
                 name: "Kelso Dunes & Mojave National Preserve",
-                part: "daytrip",
+                tags: ["Scenic & Nature"],
                 travelTime: "~1 hour 45 mins",
                 direction: "NE",
                 whatItIs: "Explore the vast, rugged, and less-visited Mojave National Preserve, featuring massive, 'singing' sand dunes.",
@@ -571,7 +574,7 @@
             },
             {
                 name: "Salton Sea & Bombay Beach",
-                part: "daytrip",
+                tags: ["Scenic & Nature", "Art & Culture"],
                 travelTime: "~1 hour 45 mins",
                 direction: "SE",
                 whatItIs: "A hauntingly beautiful, post-apocalyptic landscape. The decaying shores have become a hub for bizarre and fascinating outsider art.",
@@ -581,7 +584,7 @@
             },
             {
                 name: "Galleta Meadows Sculptures",
-                part: "daytrip",
+                tags: ["Art & Culture", "Scenic & Nature"],
                 travelTime: "~1 hour 45 mins",
                 direction: "S",
                 whatItIs: "A surreal art safari through the desert of Borrego Springs, with 130+ giant metal sculptures of prehistoric creatures.",
@@ -591,13 +594,23 @@
             },
             {
                 name: "Old Town Temecula & Wine Country",
-                part: "daytrip",
+                tags: ["Dining & Shopping", "History & Landmarks"],
                 travelTime: "~1 hour 45 mins",
                 direction: "SW",
                 whatItIs: "Spend a day in wine country! Explore rustic Old Town's storefronts, then drive through rolling hills for wine tasting.",
                 perfectFor: "A relaxing day of good food, wine tasting, and boutique shopping.",
                 knowBeforeYouGo: "Most wineries are open daily. Old Town has a popular Saturday farmers market.",
                 insiderTip: "Many wineries offer beautiful patios with stunning views, perfect for a picnic lunch."
+            },
+            {
+                name: "Salvation Mountain",
+                tags: ["Art & Culture", "Unique Experiences"],
+                travelTime: "~1 hour 45 mins",
+                direction: "SE",
+                whatItIs: "A mind-blowing explosion of color and devotion! A massive, man-made mountain of adobe and paint.",
+                perfectFor: "Lovers of folk art, surreal landscapes, and unforgettable photo ops.",
+                knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations are vital!).",
+                insiderTip: "This is a significant drive, best planned as a full day trip. Bring plenty of water and sun protection."
             }
         ];
         
@@ -618,7 +631,7 @@
                 let filteredData = locationsData;
 
                 if (filter !== 'all') {
-                    filteredData = locationsData.filter(loc => loc.part === filter);
+                    filteredData = locationsData.filter(loc => loc.tags.includes(filter));
                 }
                 
                 filteredData.sort((a, b) => {
