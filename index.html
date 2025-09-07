@@ -182,15 +182,15 @@
             </div>
         </section>
 
-        <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
-            <div class="flex flex-wrap justify-center items-center gap-2">
-                <button class="nav-btn active px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="all">All Locations</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Art & Culture">🎨 Art & Culture</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Dining & Shopping">🛍️ Dining & Shopping</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Scenic & Nature">🌄 Scenic & Nature</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="History & Landmarks">🏛️ History & Landmarks</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="Unique Experiences">✨ Unique Experiences</button>
-                <button id="sticky-itinerary-btn" class="hidden ml-4 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-white bg-blue-600 cursor-pointer">📅 My Itinerary (0)</button>
+        <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-2 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
+            <div class="flex flex-wrap justify-center items-center gap-1 sm:gap-2">
+                <button class="nav-btn active px-3 py-1.5 text-xs sm:text-base sm:px-4 sm:py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="all">All</button>
+                <button class="nav-btn px-3 py-1.5 text-xs sm:text-base sm:px-4 sm:py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="Art & Culture">🎨 Art</button>
+                <button class="nav-btn px-3 py-1.5 text-xs sm:text-base sm:px-4 sm:py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="Dining & Shopping">🛍️ Shop</button>
+                <button class="nav-btn px-3 py-1.5 text-xs sm:text-base sm:px-4 sm:py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="Scenic & Nature">🌄 Scenic</button>
+                <button class="nav-btn px-3 py-1.5 text-xs sm:text-base sm:px-4 sm:py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="History & Landmarks">🏛️ History</button>
+                <button class="nav-btn px-3 py-1.5 text-xs sm:text-base sm:px-4 sm:py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="Unique Experiences">✨ Unique</button>
+                <button id="sticky-itinerary-btn" class="hidden md:block ml-4 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-white bg-blue-600 cursor-pointer">📅 My Itinerary (0)</button>
             </div>
         </nav>
         
@@ -686,7 +686,7 @@
                 filteredData.forEach(loc => {
                     const isInItinerary = itinerary.some(item => item.name === loc.name);
                     const buttonText = isInItinerary ? 'Added ✔' : 'Add to Itinerary +';
-                    const buttonClasses = isInItinerary ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white';
+                    const buttonClasses = isInItinerary ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white font-display';
                     
                     const card = `
                         <div class="location-card flex flex-col rounded-2xl shadow-sm overflow-hidden">
@@ -727,7 +727,7 @@
                                 </div>
                             </div>
                             <div class="p-4 bg-gray-50 border-t">
-                                <button data-name="${loc.name}" class="add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors ${buttonClasses}">${buttonText}</button>
+                                <button data-name="${loc.name}" class="add-btn w-full px-4 py-2 font-bold rounded-lg ${buttonClasses}">${buttonText}</button>
                             </div>
                         </div>
                     `;
@@ -782,7 +782,7 @@
                     } else {
                         btn.textContent = 'Add to Itinerary +';
                         btn.disabled = false;
-                        btn.className = 'add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors bg-blue-500 hover:bg-blue-600 text-white';
+                        btn.className = 'add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors bg-blue-500 hover:bg-blue-600 text-white font-display';
                     }
                 });
             };
