@@ -140,6 +140,20 @@
                         <p>Check visitor center bulletin boards for free "Ranger Talks" for amazing insights.</p>
                     </div>
                 </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-xl mt-1">⛽</span>
+                   <div>
+                       <h3 class="font-bold text-gray-800">Start with a Full Tank</h3>
+                       <p>Gas stations are sparse. For any trip over 30 mins, make sure your tank is full before you venture out.</p>
+                   </div>
+               </div>
+               <div class="flex items-start gap-3">
+                <span class="text-xl mt-1">🥪</span>
+               <div>
+                   <h3 class="font-bold text-gray-800">Pack a Cooler</h3>
+                   <p>For longer day trips, bring a cooler with lunch and drinks. You can't always count on finding a place to eat in remote areas.</p>
+               </div>
+           </div>
                  <div class="flex items-start gap-3 md:col-span-2">
                      <span class="text-xl mt-1">🐾</span>
                     <div>
@@ -153,11 +167,8 @@
         <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
             <div class="flex flex-wrap justify-center gap-2">
                 <button class="nav-btn active px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="all">All Locations</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="part1">🧘 Serene & Indoor</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="part2">🌄 Outdoor Adventures</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="dining">🍽️ Dining</button>
-                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="shops">🛍️ Shops</button>
-                 <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="art">🎨 Art</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="local">📍 Hyper-Local Gems</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="daytrip">🗺️ Epic Day Trips</button>
             </div>
         </nav>
         
@@ -168,141 +179,31 @@
 
     <script>
         const locationsData = [
-             {
-                name: "Hi-Desert Nature Museum",
-                part: "part1",
-                category: "cultural",
-                travelTime: "~15 mins from hub.",
-                whatItIs: "A super fun crash course in the desert's secrets! Unlock the mysteries of the quirky plants, cool animals, and unique geology that make this place so special.",
-                perfectFor: "Families & curious minds.",
-                knowBeforeYouGo: "Open Wed-Sat 10am-5pm | Free!",
-                insiderTip: "Pair it with a treasure hunt through the antique shops in Old Town Yucca Valley for a perfect afternoon two-fer!"
-            },
-            {
-                name: "Joshua Tree Visitor & Cultural Center",
-                part: "part1",
-                category: "cultural",
-                travelTime: "~20 mins from hub.",
-                whatItIs: "Mission control for your adventure! This is your essential first stop, featuring a fantastic museum that honors the region's Native American history.",
-                perfectFor: "Literally everyone.",
-                knowBeforeYouGo: "Open Daily 8am-5pm | Free!",
-                insiderTip: "Spend an hour in the museum <em>before</em> you enter the park. The context it provides will completely change how you see the landscape."
-            },
-            {
-                name: "29 Palms Art Gallery",
-                part: "part1",
-                category: "cultural art",
-                travelTime: "~20 mins from hub.",
-                whatItIs: "Step into the heart of the desert's art scene! The oldest gallery in the area, housed in a charming, historic adobe building.",
-                perfectFor: "Art lovers and history buffs.",
-                knowBeforeYouGo: "Open Fri-Sun 11am-3pm (more hours Sep-Jun) | Free!",
-                insiderTip: "Check their schedule for a monthly artist reception. It's a fantastic chance to mingle with local creatives."
-            },
-            {
-                name: "Cabot's Pueblo Museum",
-                part: "part1",
-                category: "cultural",
-                travelTime: "~45 mins from hub.",
-                whatItIs: "A jaw-dropping masterpiece of ingenuity! Explore a massive, multi-level pueblo hand-built by a local pioneer from reclaimed materials.",
-                perfectFor: "Anyone who loves unique architecture and incredible stories.",
-                knowBeforeYouGo: "Open Tue-Sun (hours vary) | ~$13-16 admission.",
-                insiderTip: "<strong>Absolutely take the guided tour.</strong> The docents tell wild stories about the founder's adventurous life that you won't get anywhere else."
-            },
             {
                 name: "Beauty Bubble Salon & Museum",
-                part: "part1",
-                category: "shops",
-                travelTime: "~5 mins from hub.",
+                part: "local",
+                travelTime: "~5 mins",
+                direction: "W",
                 whatItIs: "A fabulously kitschy spot that's a working salon <em>and</em> a museum packed with 3,000+ pieces of vintage beauty gear.",
                 perfectFor: "Lovers of pop culture, retro style, and wonderfully weird photo ops.",
-                knowBeforeYouGo: "Hours vary (call ahead) | Free to browse.",
-                insiderTip: "Even if you’re not getting a beehive hairdo, pop in! The owner loves to share the hilarious stories behind his collection."
+                knowBeforeYouGo: "Open Tue-Sat 10am-6pm | Free to browse.",
+                insiderTip: "Even if you’re not getting a beehive hairdo, pop in! The owner is famously friendly and loves to share the hilarious stories behind his collection."
             },
             {
                 name: "World Famous Crochet Museum",
-                part: "part1",
-                category: "art shops",
-                travelTime: "~5 mins from hub.",
+                part: "local",
+                travelTime: "~5 mins",
+                direction: "W",
                 whatItIs: "A tiny, acid-green photo booth transformed into a wonderfully bizarre museum dedicated to all things crochet.",
                 perfectFor: "A quick, hilarious, and supremely quirky photo op.",
                 knowBeforeYouGo: "Always open to peek into! | Free.",
                 insiderTip: "The museum is part of the 'Art Queen' complex, so explore the other quirky art installations on the same lot."
             },
             {
-                name: "Hoof & The Horn",
-                part: "part1",
-                category: "shops",
-                travelTime: "~5 mins from hub.",
-                whatItIs: "A beautifully curated boutique that perfectly captures the modern desert-boho aesthetic.",
-                perfectFor: "Finding that perfect, stylish souvenir or a unique piece of desert-inspired fashion.",
-                knowBeforeYouGo: "Open daily.",
-                insiderTip: "A great place to find high-quality, locally designed t-shirts that go way beyond typical tourist gear."
-            },
-            {
-                name: "Rainbow Stew",
-                part: "part1",
-                category: "shops",
-                travelTime: "~15 mins from hub.",
-                whatItIs: "The epicenter of the 'Hi-Desert' vibe. A magical shop filled with crystals, sage, and a huge collection of local art.",
-                perfectFor: "Finding unique, spiritual gifts and soaking in the local culture.",
-                knowBeforeYouGo: "Open Daily (hours vary).",
-                insiderTip: "Ask the staff about the local artists. Their stories add a personal connection to every piece."
-            },
-            {
-                name: "The End",
-                part: "part1",
-                category: "shops",
-                travelTime: "~15 mins from hub.",
-                whatItIs: "A legendary vintage store known for its amazing, curated collection of retro clothing and accessories.",
-                perfectFor: "Treasure hunters looking for unique, one-of-a-kind vintage finds.",
-                knowBeforeYouGo: "Check their social media for current hours.",
-                insiderTip: "Give yourself plenty of time to dig! The racks are packed with amazing pieces waiting to be discovered."
-            },
-            {
-                name: "Sky's The Limit Observatory",
-                part: "part1",
-                category: "stargazing",
-                travelTime: "~15 mins from hub.",
-                whatItIs: "Your personal journey through the cosmos! Peer through powerful telescopes to see distant galaxies and sparkling star clusters.",
-                perfectFor: "A comfy, mind-blowing stargazing adventure for all.",
-                knowBeforeYouGo: "Grounds always open | Monthly star parties require tickets.",
-                insiderTip: "Visit during the day and use the QR codes on-site for a fun, self-guided audio tour of the walkable solar system model!"
-            },
-            {
-                name: "The Integratron",
-                part: "part1",
-                category: "stargazing",
-                travelTime: "~25 mins from hub.",
-                whatItIs: "An experience you'll talk about forever. Relax in a world-famous, acoustically perfect dome for an unforgettable 'Sound Bath.'",
-                perfectFor: "Anyone seeking deep relaxation or a truly unique experience.",
-                knowBeforeYouGo: "Open Thu-Sun | ~$55/person | <strong>Reservations are essential and sell out MONTHS in advance.</strong>",
-                insiderTip: "Can't get a ticket? You can often still visit the grounds to see the incredible structure from the outside."
-            },
-            {
-                name: "29 Palms Creative Center",
-                part: "part1",
-                category: "workshops art",
-                travelTime: "~20 mins from hub.",
-                whatItIs: "Unleash your inner artist! Offers fun, one-off classes like pottery and painting in a cool, air-conditioned studio.",
-                perfectFor: "A unique, hands-on souvenir-making session.",
-                knowBeforeYouGo: "By appointment only | Costs vary ($45+).",
-                insiderTip: "For a memorable group activity, book a private 'Neon Black Light Painting Party'!"
-            },
-            {
-                name: "MazAmar Art Pottery",
-                part: "part1",
-                category: "workshops art",
-                travelTime: "~25 mins from hub.",
-                whatItIs: "A working pottery studio on Pioneertown's iconic Mane Street, famous for their 'Joshua Tree Mugs'.",
-                perfectFor: "Taking a fun, accessible pottery class in a truly unique Old West setting.",
-                knowBeforeYouGo: "Studio store open daily | Classes must be scheduled in advance.",
-                insiderTip: "Book a class well in advance, especially for a weekend, then browse the gallery."
-            },
-            {
                 name: "Joshua Tree Coffee Company",
-                part: "part1",
-                category: "dining",
-                travelTime: "~5 mins from hub.",
+                part: "local",
+                travelTime: "~5 mins",
+                direction: "W",
                 whatItIs: "The legendary local spot for amazing, small-batch organic coffee. The line is a testament to how good it is!",
                 perfectFor: "The perfect morning kickstart.",
                 knowBeforeYouGo: "Open daily, morning/afternoon hours.",
@@ -310,109 +211,149 @@
             },
             {
                 name: "Joshua Tree Saloon",
-                part: "part1",
-                category: "dining",
-                travelTime: "~5 mins from hub.",
+                part: "local",
+                travelTime: "~5 mins",
+                direction: "W",
                 whatItIs: "The perfect post-adventure refuel spot! A classic Old West saloon serving up hearty burgers and cold beer.",
                 perfectFor: "A fun, casual meal with a classic desert vibe.",
                 knowBeforeYouGo: "Open daily, late hours | Mid-range.",
                 insiderTip: "You can't go wrong with the Mineshaft Burger and a pint of their own Prickly Pear Blond Ale!"
             },
-             {
-                name: "The Copper Room",
-                part: "part1",
-                category: "dining",
-                travelTime: "~15 mins from hub.",
-                whatItIs: "A trip back in time! A restored 1950s lounge with swanky cocktails and a prime view overlooking the Yucca Valley Airport runway.",
-                perfectFor: "A historic, retro-themed dinner with a cinematic twist.",
-                knowBeforeYouGo: "Open Daily 4pm-10pm | Reservations highly recommended.",
-                insiderTip: "Request a runway view when booking to watch small planes take off against a dramatic desert sunset."
-            },
             {
-                name: "29 Palms Inn",
-                part: "part1",
-                category: "dining",
-                travelTime: "~20 mins from hub.",
-                whatItIs: "Dinner in a literal oasis. This historic inn offers an upscale meal in a lush, romantic garden, often with live music.",
-                perfectFor: "A romantic dinner or a special occasion.",
-                knowBeforeYouGo: "Open Wed-Sun for dinner | Reservations highly recommended.",
-                insiderTip: "Arrive before sunset to wander the beautiful grounds and the adjacent Oasis of Mara."
-            },
-            {
-                name: "La Copine Kitchen",
-                part: "part1",
-                category: "dining",
-                travelTime: "~25 mins from hub.",
-                whatItIs: "A culinary pilgrimage! This nationally acclaimed restaurant serves an inventive menu that's 100% worth the drive.",
-                perfectFor: "Foodies looking for an unforgettable meal.",
-                knowBeforeYouGo: "Open Thu-Sun 11am-4pm | No reservations.",
-                insiderTip: "To minimize the wait, go on a Thursday or arrive right when they open."
-            },
-            {
-                name: "Pappy & Harriet's Pioneertown Palace",
-                part: "part1",
-                category: "dining",
-                travelTime: "~25 mins from hub.",
-                whatItIs: "One of the most famous desert venues in the world. A legendary BBQ joint and live music spot.",
-                perfectFor: "A rowdy, fun night of great food, live music, and authentic desert culture.",
-                knowBeforeYouGo: "Open Thu-Sun | Dinner reservations and advance music tickets are essential.",
-                insiderTip: "Even without show tickets, you can often grab a drink at the bar and soak in the historic atmosphere."
+                name: "Hoof & The Horn",
+                part: "local",
+                travelTime: "~5 mins",
+                direction: "W",
+                whatItIs: "A beautifully curated boutique that perfectly captures the modern desert-boho aesthetic.",
+                perfectFor: "Finding that perfect, stylish souvenir or a unique piece of desert-inspired fashion.",
+                knowBeforeYouGo: "Open daily.",
+                insiderTip: "A great place to find high-quality, locally designed t-shirts that go way beyond typical tourist gear."
             },
             {
                 name: "Noah Purifoy Outdoor Desert Art Museum",
-                part: "part2",
-                category: "art",
-                travelTime: "~10 mins from hub.",
+                part: "local",
+                travelTime: "~10 mins",
+                direction: "N",
                 whatItIs: "A sprawling 10-acre wonderland of thought-provoking sculptures built entirely from junk and found objects.",
                 perfectFor: "Art lovers and curious explorers.",
-                knowBeforeYouGo: "Open Daily, sunrise to sunset | Free (donations welcome!).",
+                knowBeforeYouGo: "Open Daily, sunrise to sunset | Free (donations welcome!). Always watch where you step.",
                 insiderTip: "Don't look for explanation signs. The artist wanted you to have your <em>own</em> unique reaction to his incredible work."
             },
             {
+                name: "Hi-Desert Nature Museum",
+                part: "local",
+                travelTime: "~15 mins",
+                direction: "W",
+                whatItIs: "A super fun crash course in the desert's secrets! Unlock the mysteries of the quirky plants, cool animals, and unique geology that make this place so special.",
+                perfectFor: "Families & curious minds.",
+                knowBeforeYouGo: "Open Wed-Sat 10am-5pm | Free!",
+                insiderTip: "Pair it with a treasure hunt through the antique shops in Old Town Yucca Valley for a perfect afternoon two-fer!"
+            },
+            {
                 name: "Desert Christ Park",
-                part: "part2",
-                category: "art",
-                travelTime: "~15 mins from hub.",
+                part: "local",
+                travelTime: "~15 mins",
+                direction: "W",
                 whatItIs: "A unique park overlooking Yucca Valley, featuring over 40 large, snow-white sculptures depicting scenes from the life of Christ.",
                 perfectFor: "Those who love roadside attractions, folk art, and unique cultural landmarks.",
                 knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations welcome).",
                 insiderTip: "Visit in the late afternoon when the low sun creates dramatic shadows on the sculptures."
             },
             {
+                name: "The Copper Room",
+                part: "local",
+                travelTime: "~15 mins",
+                direction: "W",
+                whatItIs: "A trip back in time! A restored 1950s lounge with swanky cocktails and a prime view overlooking the Yucca Valley Airport runway.",
+                perfectFor: "A historic, retro-themed dinner with a cinematic twist.",
+                knowBeforeYouGo: "Open Daily 4pm-10pm | Reservations highly recommended.",
+                insiderTip: "Request a runway view when booking to watch small planes take off against a dramatic desert sunset."
+            },
+            {
+                name: "Rainbow Stew",
+                part: "local",
+                travelTime: "~15 mins",
+                direction: "W",
+                whatItIs: "The epicenter of the 'Hi-Desert' vibe. A magical shop filled with crystals, sage, and a huge collection of local art.",
+                perfectFor: "Finding unique, spiritual gifts and soaking in the local culture.",
+                knowBeforeYouGo: "Open Daily (hours vary).",
+                insiderTip: "Ask the staff about the local artists. Their stories add a personal connection to every piece."
+            },
+            {
+                name: "The End",
+                part: "local",
+                travelTime: "~15 mins",
+                direction: "W",
+                whatItIs: "A legendary vintage store known for its amazing, curated collection of retro clothing and accessories.",
+                perfectFor: "Treasure hunters looking for unique, one-of-a-kind vintage finds.",
+                knowBeforeYouGo: "Open 7 days a week from 11am to 5pm.",
+                insiderTip: "Give yourself plenty of time to dig! The racks are packed with amazing pieces waiting to be discovered."
+            },
+            {
+                name: "Sky's The Limit Observatory",
+                part: "local",
+                travelTime: "~15 mins",
+                direction: "E",
+                whatItIs: "Your personal journey through the cosmos! Peer through powerful telescopes to see distant galaxies and sparkling star clusters.",
+                perfectFor: "A comfy, mind-blowing stargazing adventure for all.",
+                knowBeforeYouGo: "Grounds always open | Monthly star parties require tickets. Wear closed-toed shoes at night.",
+                insiderTip: "Visit during the day and use the QR codes on-site for a fun, self-guided audio tour of the walkable solar system model!"
+            },
+            {
+                name: "Joshua Tree Visitor & Cultural Center",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "E",
+                whatItIs: "Mission control for your adventure! This is your essential first stop, featuring a fantastic museum that honors the region's Native American history.",
+                perfectFor: "Literally everyone.",
+                knowBeforeYouGo: "Open Daily 8am-5pm | Free! Last stop for reliable water/restrooms before the north park entrance.",
+                insiderTip: "Spend an hour in the museum <em>before</em> you enter the park. The context it provides will completely change how you see the landscape."
+            },
+            {
+                name: "29 Palms Art Gallery",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "E",
+                whatItIs: "Step into the heart of the desert's art scene! The oldest gallery in the area, housed in a charming, historic adobe building.",
+                perfectFor: "Art lovers and history buffs.",
+                knowBeforeYouGo: "Open Fri-Sun 11am-3pm | Free!",
+                insiderTip: "Check their schedule for a monthly artist reception. It's a fantastic chance to mingle with local creatives."
+            },
+            {
+                name: "29 Palms Creative Center",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "E",
+                whatItIs: "Unleash your inner artist! Offers fun, one-off classes like pottery and painting in a cool, air-conditioned studio.",
+                perfectFor: "A unique, hands-on souvenir-making session.",
+                knowBeforeYouGo: "By appointment only | Costs vary ($45+).",
+                insiderTip: "For a memorable group activity, book a private 'Neon Black Light Painting Party'!"
+            },
+            {
+                name: "29 Palms Inn",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "E",
+                whatItIs: "Dinner in a literal oasis. This historic inn offers an upscale meal in a lush, romantic garden, often with live music.",
+                perfectFor: "A romantic dinner or a special occasion.",
+                knowBeforeYouGo: "Open Wed-Sun for dinner | Reservations highly recommended.",
+                insiderTip: "Arrive before sunset to wander the beautiful grounds and the adjacent Oasis of Mara."
+            },
+            {
                 name: "Oasis of Murals (Self-Guided Tour)",
-                part: "part2",
-                category: "art",
-                travelTime: "~20 mins from hub.",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "E",
                 whatItIs: "An art safari in your car! Hunt for over 26 massive murals that tell the story of the region's history.",
                 perfectFor: "A flexible driving tour on a hot or windy day.",
                 knowBeforeYouGo: "Viewable anytime | Free.",
                 insiderTip: "Grab a physical map from the Visitor Center for the fascinating history behind each mural."
             },
             {
-                name: "The Glass Outhouse Art Gallery",
-                part: "part2",
-                category: "art",
-                travelTime: "~30 mins from hub.",
-                whatItIs: "A whimsical outdoor playground of surreal, humorous folk art, complete with a functional outhouse made of one-way mirrors.",
-                perfectFor: "Anyone who loves quirky art and fantastic photo ops.",
-                knowBeforeYouGo: "Outdoor art is always accessible | Free.",
-                insiderTip: "If you see the owner, say hello! She has fascinating stories about creating this beloved local landmark."
-            },
-            {
-                name: "Salvation Mountain",
-                part: "part2",
-                category: "art",
-                travelTime: "~1 hour 45 mins from hub.",
-                whatItIs: "A mind-blowing explosion of color and devotion! A massive, man-made mountain of adobe and paint.",
-                perfectFor: "Lovers of folk art, surreal landscapes, and unforgettable photo ops.",
-                knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations are vital!).",
-                insiderTip: "This is a significant drive, best planned as a full day trip. Bring plenty of water and sun protection."
-            },
-            {
-                name: "Morongo Valley-Big Morongo Canyon Preserve",
-                part: "part2",
-                category: "vistas",
-                travelTime: "~20 mins from hub.",
+                name: "Big Morongo Canyon Preserve",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "W",
                 whatItIs: "A lush, green oasis that's a world away from the desert. A bird-watching paradise with accessible, shaded boardwalk trails.",
                 perfectFor: "A relaxing, cool, and easy nature walk, especially on a warm day.",
                 knowBeforeYouGo: "Open daily, 7:30 am to sunset | Free (donations appreciated).",
@@ -420,73 +361,243 @@
             },
             {
                 name: "Skull Rock",
-                part: "part2",
-                category: "vistas",
-                travelTime: "~20 mins from hub.",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "S",
                 whatItIs: "The park's most famous rock star! Wind and rain have carved this boulder into an uncanny resemblance of a human skull.",
                 perfectFor: "A quick, classic photo op that's a must-do.",
                 knowBeforeYouGo: "Located right off Park Boulevard | Park entrance fee required.",
                 insiderTip: "Parking is tight. If full, park at Jumbo Rocks Campground and take a very short walk."
             },
             {
-                name: "Pioneertown",
-                part: "part2",
-                category: "vistas",
-                travelTime: "~25 mins from hub.",
-                whatItIs: "A real 1880s Old West movie set you can walk through, featuring classic storefronts and fun shops.",
-                perfectFor: "History buffs, film lovers, and music fans.",
-                knowBeforeYouGo: "Mane Street is always open | Free to visit.",
-                insiderTip: "Visit on a weekend for the liveliest atmosphere and a possible Wild West show!"
-            },
-            {
-                name: "Keys View",
-                part: "part2",
-                category: "vistas",
-                travelTime: "~40 mins from hub.",
-                whatItIs: "The ultimate panorama! Drive up for a breathtaking view of the entire Coachella Valley and the San Andreas Fault.",
-                perfectFor: "Everyone. The paved loop makes this incredible view accessible to all.",
-                knowBeforeYouGo: "Open 24/7 (road permitting) | Park entrance fee required.",
-                insiderTip: "It's <em>always</em> colder and windier up here. Bring an extra layer, even on a warm day."
-            },
-            {
-                name: "Palm Springs Aerial Tramway",
-                part: "part2",
-                category: "vistas",
-                travelTime: "~45 mins from hub.",
-                whatItIs: "Ride the world's largest rotating tram car up the sheer cliffs of Chino Canyon. The views are spectacular.",
-                perfectFor: "Epic views, escaping the desert heat, and a truly unique experience.",
-                knowBeforeYouGo: "Open daily | Tickets are ~$40/person | Book in advance.",
-                insiderTip: "The temperature at the top is often 30-40 degrees cooler than the desert floor. Bring a jacket!"
-            },
-            {
-                name: "Cholla Cactus Garden",
-                part: "part2",
-                category: "vistas",
-                travelTime: "~45 mins from hub.",
-                whatItIs: "A beautiful and slightly dangerous cactus forest! Filled with 'teddy bear cholla,' but be warned—their spines detach easily.",
-                perfectFor: "Photographers and thrill-seekers. <strong>WARNING: DO NOT TOUCH THE CACTI.</strong>",
-                knowBeforeYouGo: "Open 24/7 | Park entrance fee required. Wear closed-to-ed shoes.",
-                insiderTip: "<strong>Go at sunrise or sunset.</strong> The low-angle light makes the cactus spines glow as if they're lit from within."
-            },
-            {
                 name: "Horseback Riding",
-                part: "part2",
-                category: "excursions",
-                travelTime: "~20 mins from hub.",
+                part: "local",
+                travelTime: "~20 mins",
+                direction: "W",
                 whatItIs: "Saddle up, partner! See the Mojave Desert like a real cowboy on a guided tour.",
                 perfectFor: "A memorable adventure for all skill levels.",
                 knowBeforeYouGo: "Local ranches offer guided tours. Book in advance.",
                 insiderTip: "A sunset ride is an absolutely magical experience, offering incredible views and photo opportunities."
             },
             {
+                name: "The Integratron",
+                part: "local",
+                travelTime: "~25 mins",
+                direction: "NW",
+                whatItIs: "An experience you'll talk about forever. Relax in a world-famous, acoustically perfect dome for an unforgettable 'Sound Bath.'",
+                perfectFor: "Anyone seeking deep relaxation or a truly unique experience.",
+                knowBeforeYouGo: "Open Thu-Sun | ~$55/person | <strong>Reservations are essential and sell out MONTHS in advance.</strong>",
+                insiderTip: "Can't get a ticket? You can often still visit the grounds to see the incredible structure from the outside."
+            },
+            {
+                name: "MazAmar Art Pottery",
+                part: "local",
+                travelTime: "~25 mins",
+                direction: "NW",
+                whatItIs: "A working pottery studio on Pioneertown's iconic Mane Street, famous for their 'Joshua Tree Mugs'.",
+                perfectFor: "Taking a fun, accessible pottery class in a truly unique Old West setting.",
+                knowBeforeYouGo: "Studio store open daily | Classes must be scheduled in advance.",
+                insiderTip: "Book a class well in advance, especially for a weekend, then browse the gallery."
+            },
+            {
+                name: "La Copine Kitchen",
+                part: "local",
+                travelTime: "~25 mins",
+                direction: "NW",
+                whatItIs: "A culinary pilgrimage! This nationally acclaimed restaurant serves an inventive menu that's 100% worth the drive.",
+                perfectFor: "Foodies looking for an unforgettable meal.",
+                knowBeforeYouGo: "Open Thu-Sun 11am-4pm | No reservations.",
+                insiderTip: "To minimize the wait, go on a Thursday or arrive right when they open."
+            },
+            {
+                name: "Pappy & Harriet's Pioneertown Palace",
+                part: "local",
+                travelTime: "~25 mins",
+                direction: "NW",
+                whatItIs: "One of the most famous desert venues in the world. A legendary BBQ joint and live music spot.",
+                perfectFor: "A rowdy, fun night of great food, live music, and authentic desert culture.",
+                knowBeforeYouGo: "Open Thu-Sun | Dinner reservations and advance music tickets are essential.",
+                insiderTip: "Even without show tickets, you can often grab a drink at the bar and soak in the historic atmosphere."
+            },
+            {
+                name: "Pioneertown",
+                part: "local",
+                travelTime: "~25 mins",
+                direction: "NW",
+                whatItIs: "A real 1880s Old West movie set you can walk through, featuring classic storefronts and fun shops.",
+                perfectFor: "History buffs, film lovers, and music fans.",
+                knowBeforeYouGo: "Mane Street is always open | Free to visit.",
+                insiderTip: "Visit on a weekend for the liveliest atmosphere and a possible Wild West show!"
+            },
+            {
+                name: "The Glass Outhouse Art Gallery",
+                part: "local",
+                travelTime: "~30 mins",
+                direction: "E",
+                whatItIs: "A whimsical outdoor playground of surreal, humorous folk art, complete with a functional outhouse made of one-way mirrors.",
+                perfectFor: "Anyone who loves quirky art and fantastic photo ops.",
+                knowBeforeYouGo: "Outdoor art is always accessible | Free.",
+                insiderTip: "If you see the owner, say hello! She has fascinating stories about creating this beloved local landmark."
+            },
+            {
+                name: "Keys View",
+                part: "local",
+                travelTime: "~40 mins",
+                direction: "S",
+                whatItIs: "The ultimate panorama! Drive up for a breathtaking view of the entire Coachella Valley and the San Andreas Fault.",
+                perfectFor: "Everyone. The paved loop makes this incredible view accessible to all.",
+                knowBeforeYouGo: "Open 24/7 (road permitting) | Park entrance fee required.",
+                insiderTip: "It's <em>always</em> colder and windier up here. Bring an extra layer, even on a warm day."
+            },
+            {
+                name: "Cabot's Pueblo Museum",
+                part: "local",
+                travelTime: "~45 mins",
+                direction: "SW",
+                whatItIs: "A jaw-dropping masterpiece of ingenuity! Explore a massive, multi-level pueblo hand-built by a local pioneer from reclaimed materials.",
+                perfectFor: "Anyone who loves unique architecture and incredible stories.",
+                knowBeforeYouGo: "Open Tue-Sat 9am-1pm | ~$13 admission.",
+                insiderTip: "<strong>Absolutely take the guided tour.</strong> The docents tell wild stories about the founder's adventurous life that you won't get anywhere else."
+            },
+            {
+                name: "Cholla Cactus Garden",
+                part: "local",
+                travelTime: "~45 mins",
+                direction: "SE",
+                whatItIs: "A beautiful and slightly dangerous cactus forest! Filled with 'teddy bear cholla,' but be warned—their spines detach easily.",
+                perfectFor: "Photographers and thrill-seekers. <strong>WARNING: DO NOT TOUCH THE CACTI.</strong>",
+                knowBeforeYouGo: "Open 24/7 | Park entrance fee required. Wear closed-toed shoes.",
+                insiderTip: "<strong>Go at sunrise or sunset.</strong> The low-angle light makes the cactus spines glow as if they're lit from within."
+            },
+            {
                 name: "Offroading Adventure",
-                part: "part2",
-                category: "excursions",
-                travelTime: "Varies based on trail entrance.",
+                part: "local",
+                travelTime: "Varies",
+                direction: "",
                 whatItIs: "Explore the park's rugged backcountry on wheels! A 4x4 adventure lets you discover remote dirt roads.",
                 perfectFor: "Adventure seekers who want to get off the beaten path.",
                 knowBeforeYouGo: "Many dirt roads are open to 4-wheel drive vehicles. Tours are available.",
                 insiderTip: "Before you go, make sure your vehicle's tank is full and your tires are in good shape. Always have extra water in the car."
+            },
+            {
+                name: "Cabazon Dinosaurs & Desert Hills Outlets",
+                part: "daytrip",
+                travelTime: "~1 hour",
+                direction: "W",
+                whatItIs: "A classic California roadside attraction! Take photos with the massive, iconic T-Rex and Brontosaurus sculptures.",
+                perfectFor: "A fun photo-op followed by some serious retail therapy at the huge outlet mall next door.",
+                knowBeforeYouGo: "Dinos open daily 9am-6pm, ~$15 admission. Outlets have standard mall hours.",
+                insiderTip: "Stop at the famous Hadley Fruit Orchards just down the road for one of their legendary date shakes—a quintessential SoCal treat."
+            },
+            {
+                name: "Palm Springs Air Museum",
+                part: "daytrip",
+                travelTime: "~1 hour",
+                direction: "W",
+                whatItIs: "A world-class aviation museum featuring one of the largest collections of flyable WWII aircraft in the world.",
+                perfectFor: "History buffs, aviation enthusiasts, and a great indoor activity on a hot day.",
+                knowBeforeYouGo: "Open daily 10am-5pm | ~$25 admission.",
+                insiderTip: "Many of the volunteer docents are veterans who flew these types of planes and have incredible firsthand stories to share."
+            },
+            {
+                name: "Downtown Palm Springs & Moorten Botanical Garden",
+                part: "daytrip",
+                travelTime: "~1 hour",
+                direction: "W",
+                whatItIs: "A perfect one-two punch of city and nature. Explore chic boutiques and mid-century modern architecture, then visit the charming 'Cactarium'.",
+                perfectFor: "A stylish day of shopping, architecture, and unique desert flora.",
+                knowBeforeYouGo: "Botanical Garden has seasonal hours and ~$7 admission.",
+                insiderTip: "The Moorten Botanical Garden is family-owned and has a very personal, magical feel you won't find at larger gardens."
+            },
+            {
+                name: "Palm Springs Aerial Tramway",
+                part: "daytrip",
+                travelTime: "~1 hour",
+                direction: "W",
+                whatItIs: "Ride the world's largest rotating tram car up the sheer cliffs of Chino Canyon. The views are spectacular.",
+                perfectFor: "Epic views, escaping the desert heat, and a truly unique experience.",
+                knowBeforeYouGo: "Open daily | Tickets are ~$35/person | Book in advance.",
+                insiderTip: "The temperature at the top is often 30-40 degrees cooler than the desert floor. Bring a jacket!"
+            },
+            {
+                name: "The Living Desert Zoo & Sunnylands",
+                part: "daytrip",
+                travelTime: "~1 hour 15 mins",
+                direction: "SW",
+                whatItIs: "A trifecta of attractions. See desert animals at the Zoo, window-shop on El Paseo, and tour the stunning Sunnylands estate.",
+                perfectFor: "A full day of diverse activities, from wildlife to luxury shopping to historic architecture.",
+                knowBeforeYouGo: "Zoo has seasonal hours, ~$40 admission. Sunnylands Center & Gardens is free to visit (Wed-Sun).",
+                insiderTip: "Sunnylands is known as the 'Camp David of the West' for hosting presidents and world leaders. The free garden tour is fantastic."
+            },
+            {
+                name: "Idyllwild",
+                part: "daytrip",
+                travelTime: "~1 hour 15 mins",
+                direction: "W",
+                whatItIs: "Escape the desert heat by driving up into the mountains to this artsy, quiet village nestled in the pines.",
+                perfectFor: "A complete change of scenery, with charming shops, art galleries, and a cool mountain breeze.",
+                knowBeforeYouGo: "The drive up the mountain is scenic but winding. Check road conditions in winter.",
+                insiderTip: "Idyllwild is a great place for a leisurely lunch at one of its many cozy cafes and restaurants."
+            },
+            {
+                name: "Amboy Crater & Roy's Motel",
+                part: "daytrip",
+                travelTime: "~1 hour 30 mins",
+                direction: "E",
+                whatItIs: "A perfectly preserved slice of iconic Route 66 history. Roy's Motel and Café is a legendary photo op.",
+                perfectFor: "Road trip enthusiasts and photographers looking for that classic Americana vibe.",
+                knowBeforeYouGo: "This is a very remote area. Ensure you have a full tank of gas and plenty of water.",
+                insiderTip: "The sense of isolation and history at Roy's is palpable. It feels like stepping onto a movie set."
+            },
+            {
+                name: "Calico Ghost Town",
+                part: "daytrip",
+                travelTime: "~1 hour 45 mins",
+                direction: "NE",
+                whatItIs: "A real 1880s silver mining town restored as a family-friendly attraction with gunfights, mine tours, and Old West shops.",
+                perfectFor: "Families and anyone who loves Old West history.",
+                knowBeforeYouGo: "Open daily 9am-5pm | ~$8 admission.",
+                insiderTip: "Wear comfortable shoes as you'll be walking on wooden boardwalks and dirt roads."
+            },
+            {
+                name: "Kelso Dunes & Mojave National Preserve",
+                part: "daytrip",
+                travelTime: "~1 hour 45 mins",
+                direction: "NE",
+                whatItIs: "Explore the vast, rugged, and less-visited Mojave National Preserve, featuring massive, 'singing' sand dunes.",
+                perfectFor: "Adventurers looking for solitude and dramatic, otherworldly landscapes.",
+                knowBeforeYouGo: "Services are non-existent. This is a trip for the well-prepared with a reliable vehicle.",
+                insiderTip: "The 'boom' of the singing dunes is a real phenomenon caused by shifting sands. It's an unforgettable sound if you're lucky enough to hear it."
+            },
+            {
+                name: "Salton Sea & Bombay Beach",
+                part: "daytrip",
+                travelTime: "~1 hour 45 mins",
+                direction: "SE",
+                whatItIs: "A hauntingly beautiful, post-apocalyptic landscape. The decaying shores have become a hub for bizarre and fascinating outsider art.",
+                perfectFor: "Photographers and explorers drawn to surreal, unconventional beauty.",
+                knowBeforeYouGo: "The area has a distinct smell due to the sea's salinity and history. Be prepared for a unique sensory experience.",
+                insiderTip: "Drive slowly through the residential parts of Bombay Beach to see the incredible art installations created by its residents."
+            },
+            {
+                name: "Galleta Meadows Sculptures",
+                part: "daytrip",
+                travelTime: "~1 hour 45 mins",
+                direction: "S",
+                whatItIs: "A surreal art safari through the desert of Borrego Springs, with 130+ giant metal sculptures of prehistoric creatures.",
+                perfectFor: "A whimsical and unforgettable treasure hunt for art lovers and families.",
+                knowBeforeYouGo: "The sculptures are spread out over several miles. Pick up a map in town to find them all.",
+                insiderTip: "The 350-foot-long sea serpent that appears to dive under the road is the most impressive sculpture—a must-see."
+            },
+            {
+                name: "Old Town Temecula & Wine Country",
+                part: "daytrip",
+                travelTime: "~1 hour 45 mins",
+                direction: "SW",
+                whatItIs: "Spend a day in wine country! Explore rustic Old Town's storefronts, then drive through rolling hills for wine tasting.",
+                perfectFor: "A relaxing day of good food, wine tasting, and boutique shopping.",
+                knowBeforeYouGo: "Most wineries are open daily. Old Town has a popular Saturday farmers market.",
+                insiderTip: "Many wineries offer beautiful patios with stunning views, perfect for a picnic lunch."
             }
         ];
         
@@ -507,12 +618,15 @@
                 let filteredData = locationsData;
 
                 if (filter !== 'all') {
-                    filteredData = locationsData.filter(loc => loc.part === filter || loc.category.includes(filter));
+                    filteredData = locationsData.filter(loc => loc.part === filter);
                 }
                 
                 filteredData.sort((a, b) => {
                     const timeA = parseInt(a.travelTime.replace(/[^0-9]/g, '')) || 0;
                     const timeB = parseInt(b.travelTime.replace(/[^0-9]/g, '')) || 0;
+                    if(timeA === timeB){
+                         return a.name.localeCompare(b.name);
+                    }
                     return timeA - timeB;
                 });
 
@@ -525,7 +639,7 @@
                         <div class="location-card flex flex-col rounded-2xl shadow-sm overflow-hidden">
                             <div class="p-5 sm:p-6 bg-gray-50 border-b border-gray-200">
                                 <h3 class="text-lg sm:text-xl font-bold text-gray-800">${loc.name}</h3>
-                                <p class="text-sm text-gray-500 font-medium">🚗 ${loc.travelTime}</p>
+                                <p class="text-sm text-gray-500 font-medium">🚗 ${loc.travelTime} <span class="font-bold">${loc.direction}</span></p>
                             </div>
                             <div class="p-5 sm:p-6 space-y-5 text-base text-gray-700 flex-grow">
                                 <div class="flex items-start gap-3">
@@ -584,7 +698,7 @@
                                 <span class="drag-handle text-gray-400 cursor-grab touch-none">☰</span>
                                 <div>
                                     <p class="font-bold text-gray-800">${loc.name}</p>
-                                    <p class="text-sm text-gray-500">${loc.travelTime}</p>
+                                    <p class="text-sm text-gray-500">${loc.travelTime} ${loc.direction}</p>
                                 </div>
                             </div>
                             <button data-name="${loc.name}" class="remove-btn text-red-500 hover:text-red-700 font-bold text-xl">&times;</button>
