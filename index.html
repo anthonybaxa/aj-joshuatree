@@ -6,14 +6,20 @@
     <title>The Joshua Tree At-a-Glance Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Warm Sandstone -->
-    <!-- Application Structure Plan: A single-page dashboard with a persistent top navigation bar for filtering content. The main content area displays location details in a scannable card format. This structure was chosen for its intuitive, mobile-friendly design that allows users to quickly find relevant information without scrolling through the entire guide, directly supporting the "at-a-glance" purpose of the source material. -->
-    <!-- Visualization & Content Choices: The guide's text-based content is presented using structured HTML and styled with Tailwind CSS. No data charts are necessary. The primary interactions are JavaScript-powered filters triggered by navigation clicks. This method directly translates the document's sections into an interactive user experience, allowing for easy exploration and comparison of locations. Icons are rendered using Unicode emojis to maintain the source's friendly aesthetic. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Application Structure Plan: A single-page dashboard with a persistent top navigation bar for filtering content and a new collapsible itinerary builder. The main content area displays location details in a scannable card format with "add to itinerary" functionality. This structure enhances user agency by allowing them to actively curate their own plan, moving the application from a passive guide to an active planning tool. -->
+    <!-- Visualization & Content Choices: The guide's text-based content is presented using structured HTML. The primary interactions are JavaScript-powered filters and a new drag-and-drop itinerary system (with optimized touch support for mobile). The itinerary is managed via a JavaScript array, providing a dynamic and stateful user experience. Icons are rendered using Unicode emojis. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             background-color: #FDF6E3; /* Warm Sandstone base */
             color: #586e75;
             font-family: 'Inter', sans-serif;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
         }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         .nav-btn {
@@ -35,10 +41,34 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
         }
         .pro-tips {
-            background-color: #EEE8D5; /* A slightly darker sandstone for contrast */
+            background-color: #EEE8D5;
         }
         .insider-tip {
-            background-color: #FBF1C7; /* A lighter, yellower sandstone for tips */
+            background-color: #FBF1C7;
+        }
+        .itinerary-item {
+            cursor: grab;
+            transition: background-color 0.2s ease;
+        }
+        .itinerary-item:active {
+            cursor: grabbing;
+        }
+        .dragging, .touch-dragging {
+            opacity: 0.5;
+            background: #fefce8;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        #itinerary-content {
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        #itinerary-content.open {
+            max-height: 1000px; /* Adjust as needed */
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
         }
     </style>
 </head>
@@ -53,17 +83,71 @@
             </p>
         </header>
 
+        <section id="itinerary-builder" class="mb-8 md:mb-10 bg-white rounded-2xl shadow-md border border-gray-200">
+            <button id="toggle-itinerary" class="w-full text-left p-4 rounded-2xl font-bold text-xl text-gray-800 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors">
+                <span>📅 My Itinerary</span>
+                <span id="itinerary-arrow" class="transform transition-transform">▼</span>
+            </button>
+            <div id="itinerary-content" class="px-6 border-t">
+                <div id="itinerary-list" class="space-y-2">
+                    <p id="itinerary-placeholder" class="text-gray-500">Your itinerary is empty. Click "Add to Itinerary" on any location to start planning your trip!</p>
+                </div>
+            </div>
+        </section>
+
         <section class="pro-tips p-6 rounded-2xl mb-8 md:mb-10 shadow-md">
-            <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">✨ Pro-Tips for Your Adventure ✨</h2>
-            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
-                <li><strong>Hydration is Key:</strong> The golden rule is <strong>one gallon of water per person, per day.</strong> Pack salty snacks to stay energized.</li>
-                <li><strong>Be Your Own Tour Guide:</strong> Before you lose service, download the official <strong>NPS App</strong> for its fantastic self-guided audio tour.</li>
-                <li><strong>Plan for Peak Starlight:</strong> Joshua Tree is a world-class Dark Sky Park. Check an astronomy app for the moon phase for your visit—a new moon means breathtaking views of the Milky Way.</li>
-                <li><strong>Dress for Success:</strong> Wear lightweight, long-sleeved shirts. A wide-brimmed hat and sunglasses are essential. Pack layers for surprisingly cool nights.</li>
-                <li><strong>Plan for Zero Service:</strong> Download maps and this guide offline. Leave a detailed itinerary with someone back home.</li>
-                <li><strong>Chat with a Ranger:</strong> Check visitor center bulletin boards for free "Ranger Talks" for amazing insights.</li>
-                <li><strong>Watch for Your Neighbors:</strong> Your hub is where town meets wild. Expect wildlife like coyotes at dawn and dusk. Keep a respectful distance and never leave food outside.</li>
-            </ul>
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">✨ Pro-Tips for Your Adventure ✨</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-gray-700">
+                <div class="flex items-start gap-3">
+                    <span class="text-xl mt-1">💧</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Hydration is Key</h3>
+                        <p>The golden rule is <strong>one gallon of water per person, per day.</strong> Pack salty snacks to stay energized.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="text-xl mt-1">📱</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Be Your Own Tour Guide</h3>
+                        <p>Before you lose service, download the official <strong>NPS App</strong> for its fantastic self-guided audio tour.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                     <span class="text-xl mt-1">⭐</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Plan for Peak Starlight</h3>
+                        <p>Joshua Tree is a world-class Dark Sky Park. Check an astronomy app for the moon phase—a new moon means breathtaking views of the Milky Way.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                     <span class="text-xl mt-1">👕</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Dress for Success</h3>
+                        <p>Wear lightweight, long-sleeved shirts, a wide-brimmed hat, and sunglasses. Pack layers for surprisingly cool nights.</p>
+                    </div>
+                </div>
+                 <div class="flex items-start gap-3">
+                     <span class="text-xl mt-1">📡</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Plan for Zero Service</h3>
+                        <p>Download maps and this guide offline. Leave a detailed itinerary with someone back home.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                     <span class="text-xl mt-1"> ranger</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Chat with a Ranger</h3>
+                        <p>Check visitor center bulletin boards for free "Ranger Talks" for amazing insights.</p>
+                    </div>
+                </div>
+                 <div class="flex items-start gap-3 md:col-span-2">
+                     <span class="text-xl mt-1">🐾</span>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Watch for Your Neighbors</h3>
+                        <p>Your hub is where town meets wild. Expect wildlife like coyotes at dawn and dusk. Keep a respectful distance and never leave food outside.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
@@ -84,7 +168,7 @@
 
     <script>
         const locationsData = [
-            {
+             {
                 name: "Hi-Desert Nature Museum",
                 part: "part1",
                 category: "cultural",
@@ -381,7 +465,7 @@
                 travelTime: "~45 mins from hub.",
                 whatItIs: "A beautiful and slightly dangerous cactus forest! Filled with 'teddy bear cholla,' but be warned—their spines detach easily.",
                 perfectFor: "Photographers and thrill-seekers. <strong>WARNING: DO NOT TOUCH THE CACTI.</strong>",
-                knowBeforeYouGo: "Open 24/7 | Park entrance fee required. Wear closed-toed shoes.",
+                knowBeforeYouGo: "Open 24/7 | Park entrance fee required. Wear closed-to-ed shoes.",
                 insiderTip: "<strong>Go at sunrise or sunset.</strong> The low-angle light makes the cactus spines glow as if they're lit from within."
             },
             {
@@ -405,11 +489,18 @@
                 insiderTip: "Before you go, make sure your vehicle's tank is full and your tires are in good shape. Always have extra water in the car."
             }
         ];
+        
+        let itinerary = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.getElementById('locations-grid');
             const nav = document.getElementById('navigation');
             const navButtons = nav.querySelectorAll('.nav-btn');
+            const itineraryList = document.getElementById('itinerary-list');
+            const itineraryPlaceholder = document.getElementById('itinerary-placeholder');
+            const toggleItineraryBtn = document.getElementById('toggle-itinerary');
+            const itineraryContent = document.getElementById('itinerary-content');
+            const itineraryArrow = document.getElementById('itinerary-arrow');
 
             const renderLocations = (filter) => {
                 grid.innerHTML = '';
@@ -419,7 +510,6 @@
                     filteredData = locationsData.filter(loc => loc.part === filter || loc.category.includes(filter));
                 }
                 
-                // Sort by travel time (parsing the number from the string)
                 filteredData.sort((a, b) => {
                     const timeA = parseInt(a.travelTime.replace(/[^0-9]/g, '')) || 0;
                     const timeB = parseInt(b.travelTime.replace(/[^0-9]/g, '')) || 0;
@@ -427,19 +517,50 @@
                 });
 
                 filteredData.forEach(loc => {
+                    const isInItinerary = itinerary.some(item => item.name === loc.name);
+                    const buttonText = isInItinerary ? 'Added ✔' : 'Add to Itinerary +';
+                    const buttonClasses = isInItinerary ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white';
+                    
                     const card = `
                         <div class="location-card flex flex-col rounded-2xl shadow-sm overflow-hidden">
                             <div class="p-5 sm:p-6 bg-gray-50 border-b border-gray-200">
                                 <h3 class="text-lg sm:text-xl font-bold text-gray-800">${loc.name}</h3>
                                 <p class="text-sm text-gray-500 font-medium">🚗 ${loc.travelTime}</p>
                             </div>
-                            <div class="p-5 sm:p-6 space-y-4 text-base text-gray-700 flex-grow">
-                                <p><strong class="text-gray-800 block text-sm">🤔 What it is:</strong> ${loc.whatItIs}</p>
-                                <p><strong class="text-gray-800 block text-sm">🎯 Perfect for:</strong> ${loc.perfectFor}</p>
-                                <p><strong class="text-gray-800 block text-sm">📋 Know before you go:</strong> ${loc.knowBeforeYouGo}</p>
+                            <div class="p-5 sm:p-6 space-y-5 text-base text-gray-700 flex-grow">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-2xl mt-0.5">🤔</span>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 text-sm">What it is</p>
+                                        <p class="text-gray-600">${loc.whatItIs}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-2xl mt-0.5">🎯</span>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 text-sm">Perfect for</p>
+                                        <p class="text-gray-600">${loc.perfectFor}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-2xl mt-0.5">📋</span>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 text-sm">Know before you go</p>
+                                        <p class="text-gray-600">${loc.knowBeforeYouGo}</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mt-auto p-5 sm:p-6 insider-tip border-t-2 border-dashed border-amber-400">
-                                <p class="text-sm text-amber-900"><strong class="text-amber-900 block font-bold">💡 Insider Tip:</strong> ${loc.insiderTip}</p>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-2xl mt-0.5">💡</span>
+                                    <div>
+                                        <p class="font-bold text-amber-900 text-sm">Insider Tip</p>
+                                        <p class="text-amber-800">${loc.insiderTip}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 border-t">
+                                <button data-name="${loc.name}" class="add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors ${buttonClasses}" ${isInItinerary ? 'disabled' : ''}>${buttonText}</button>
                             </div>
                         </div>
                     `;
@@ -447,19 +568,166 @@
                 });
             };
 
+            const renderItinerary = () => {
+                itineraryList.innerHTML = '';
+                if (itinerary.length === 0) {
+                    itineraryPlaceholder.style.display = 'block';
+                } else {
+                    itineraryPlaceholder.style.display = 'none';
+                    itinerary.forEach(loc => {
+                        const item = document.createElement('div');
+                        item.className = 'itinerary-item flex items-center justify-between p-3 bg-gray-100 rounded-lg hover:bg-gray-200';
+                        item.setAttribute('draggable', true);
+                        item.dataset.name = loc.name;
+                        item.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <span class="drag-handle text-gray-400 cursor-grab touch-none">☰</span>
+                                <div>
+                                    <p class="font-bold text-gray-800">${loc.name}</p>
+                                    <p class="text-sm text-gray-500">${loc.travelTime}</p>
+                                </div>
+                            </div>
+                            <button data-name="${loc.name}" class="remove-btn text-red-500 hover:text-red-700 font-bold text-xl">&times;</button>
+                        `;
+                        itineraryList.appendChild(item);
+                    });
+                }
+                updateCardButtons();
+            };
+
+            const updateCardButtons = () => {
+                const addButtons = document.querySelectorAll('.add-btn');
+                addButtons.forEach(btn => {
+                    const locationName = btn.dataset.name;
+                    if (itinerary.some(item => item.name === locationName)) {
+                        btn.textContent = 'Added ✔';
+                        btn.disabled = true;
+                        btn.className = 'add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors bg-green-500 text-white cursor-not-allowed';
+                    } else {
+                        btn.textContent = 'Add to Itinerary +';
+                        btn.disabled = false;
+                        btn.className = 'add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors bg-blue-500 hover:bg-blue-600 text-white';
+                    }
+                });
+            };
+
+            grid.addEventListener('click', e => {
+                if (e.target.matches('.add-btn')) {
+                    const locationName = e.target.dataset.name;
+                    if (!itinerary.some(item => item.name === locationName)) {
+                        const location = locationsData.find(loc => loc.name === locationName);
+                        itinerary.push(location);
+                        renderItinerary();
+                    }
+                }
+            });
+
+            itineraryList.addEventListener('click', e => {
+                if (e.target.matches('.remove-btn')) {
+                    const locationName = e.target.dataset.name;
+                    itinerary = itinerary.filter(item => item.name !== locationName);
+                    renderItinerary();
+                }
+            });
+
+            toggleItineraryBtn.addEventListener('click', () => {
+                const itineraryContent = document.getElementById('itinerary-content');
+                const itineraryArrow = document.getElementById('itinerary-arrow');
+                itineraryContent.classList.toggle('open');
+                itineraryArrow.classList.toggle('rotate-180');
+            });
+            
+            let draggedItem = null;
+
+            itineraryList.addEventListener('dragstart', e => {
+                draggedItem = e.target;
+                setTimeout(() => e.target.classList.add('dragging'), 0);
+            });
+
+            itineraryList.addEventListener('dragend', e => {
+                setTimeout(() => {
+                    if (draggedItem) {
+                        draggedItem.classList.remove('dragging');
+                    }
+                    draggedItem = null;
+                }, 0);
+            });
+            
+            itineraryList.addEventListener('dragover', e => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(itineraryList, e.clientY);
+                const currentDragged = document.querySelector('.dragging');
+                if (currentDragged) {
+                    if (afterElement == null) {
+                        itineraryList.appendChild(currentDragged);
+                    } else {
+                        itineraryList.insertBefore(currentDragged, afterElement);
+                    }
+                }
+            });
+            
+            itineraryList.addEventListener('drop', e => {
+                e.preventDefault();
+                if(draggedItem){
+                    const newOrderNames = [...itineraryList.querySelectorAll('.itinerary-item')].map(item => item.dataset.name);
+                    itinerary.sort((a, b) => newOrderNames.indexOf(a.name) - newOrderNames.indexOf(b.name));
+                    renderItinerary();
+                }
+            });
+            
+            itineraryList.addEventListener('touchstart', e => {
+                if (e.target.classList.contains('drag-handle')) {
+                    draggedItem = e.target.closest('.itinerary-item');
+                    draggedItem.classList.add('touch-dragging');
+                }
+            }, {passive: false});
+
+            itineraryList.addEventListener('touchmove', e => {
+                if (!draggedItem) return;
+                e.preventDefault();
+                const touchLocation = e.targetTouches[0];
+                const afterElement = getDragAfterElement(itineraryList, touchLocation.clientY);
+                if (afterElement == null) {
+                    itineraryList.appendChild(draggedItem);
+                } else {
+                    itineraryList.insertBefore(draggedItem, afterElement);
+                }
+            }, {passive: false});
+
+            itineraryList.addEventListener('touchend', () => {
+                if(!draggedItem) return;
+                draggedItem.classList.remove('touch-dragging');
+                const newOrderNames = [...itineraryList.querySelectorAll('.itinerary-item')].map(item => item.dataset.name);
+                itinerary.sort((a, b) => newOrderNames.indexOf(a.name) - newOrderNames.indexOf(b.name));
+                renderItinerary();
+                draggedItem = null;
+            });
+
+
+            function getDragAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll('.itinerary-item:not(.dragging):not(.touch-dragging)')];
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = y - box.top - box.height / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+            }
+
             nav.addEventListener('click', (e) => {
                 if (e.target.matches('.nav-btn')) {
                     const filter = e.target.dataset.filter;
-                    
                     navButtons.forEach(btn => btn.classList.remove('active'));
                     e.target.classList.add('active');
-
                     renderLocations(filter);
                 }
             });
 
-            // Initial render
             renderLocations('all');
+            renderItinerary();
         });
     </script>
 </body>
