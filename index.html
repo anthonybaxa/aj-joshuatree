@@ -27,29 +27,33 @@
         }
         .location-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fdfdfd;
+            background-color: #ffffff;
+            border: 1px solid #EEE8D5;
         }
         .location-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
         }
         .pro-tips {
             background-color: #EEE8D5; /* A slightly darker sandstone for contrast */
+        }
+        .insider-tip {
+            background-color: #FBF1C7; /* A lighter, yellower sandstone for tips */
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
         
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">🌵 The Joshua Tree At-a-Glance Guide 🌵</h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        <header class="text-center mb-8 md:mb-10">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2">🌵 The Joshua Tree At-a-Glance Guide 🌵</h1>
+            <p class="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
                 Welcome to your ultimate guide for an unforgettable desert adventure! We're focused on the most unique and exciting experiences that don't require hiking boots—from quirky art installations and relaxing sound baths to incredible scenic drives and delicious local eats.
             </p>
         </header>
 
-        <section class="pro-tips p-6 rounded-2xl mb-10 shadow-md">
+        <section class="pro-tips p-6 rounded-2xl mb-8 md:mb-10 shadow-md">
             <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">✨ Pro-Tips for Your Adventure ✨</h2>
             <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
                 <li><strong>Hydration is Key:</strong> The golden rule is <strong>one gallon of water per person, per day.</strong> Pack salty snacks to stay energized.</li>
@@ -62,18 +66,18 @@
             </ul>
         </section>
 
-        <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-4 rounded-2xl shadow-lg mb-8">
+        <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
             <div class="flex flex-wrap justify-center gap-2">
-                <button class="nav-btn active px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="all">All Locations</button>
-                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="part1">🧘 Serene & Indoor</button>
-                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="part2">🌄 Outdoor Adventures</button>
-                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="dining">🍽️ Dining</button>
-                <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="shops">🛍️ Shops</button>
-                 <button class="nav-btn px-4 py-2 rounded-full font-semibold text-gray-700 bg-gray-200" data-filter="art">🎨 Art</button>
+                <button class="nav-btn active px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="all">All Locations</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="part1">🧘 Serene & Indoor</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="part2">🌄 Outdoor Adventures</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="dining">🍽️ Dining</button>
+                <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="shops">🛍️ Shops</button>
+                 <button class="nav-btn px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base text-gray-700 bg-gray-200" data-filter="art">🎨 Art</button>
             </div>
         </nav>
         
-        <main id="locations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <main id="locations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <!-- Location cards will be dynamically inserted here -->
         </main>
     </div>
@@ -424,16 +428,18 @@
 
                 filteredData.forEach(loc => {
                     const card = `
-                        <div class="location-card flex flex-col border border-gray-200 rounded-2xl p-6 shadow-sm overflow-hidden" data-part="${loc.part}" data-category="${loc.category}">
-                            <h3 class="text-xl font-bold text-gray-800 mb-3">${loc.name}</h3>
-                            <div class="space-y-3 text-gray-600 flex-grow">
-                                <p><strong class="text-gray-800">🚗 Travel Time:</strong> ${loc.travelTime}</p>
-                                <p><strong class="text-gray-800">🤔 What it is:</strong> ${loc.whatItIs}</p>
-                                <p><strong class="text-gray-800">🎯 Perfect for:</strong> ${loc.perfectFor}</p>
-                                <p><strong class="text-gray-800">📋 Know before you go:</strong> ${loc.knowBeforeYouGo}</p>
+                        <div class="location-card flex flex-col rounded-2xl shadow-sm overflow-hidden">
+                            <div class="p-5 sm:p-6 bg-gray-50 border-b border-gray-200">
+                                <h3 class="text-lg sm:text-xl font-bold text-gray-800">${loc.name}</h3>
+                                <p class="text-sm text-gray-500 font-medium">🚗 ${loc.travelTime}</p>
                             </div>
-                            <div class="mt-4 pt-4 border-t border-gray-200">
-                                <p class="text-sm text-gray-500"><strong class="text-gray-700">💡 Insider Tip:</strong> ${loc.insiderTip}</p>
+                            <div class="p-5 sm:p-6 space-y-4 text-base text-gray-700 flex-grow">
+                                <p><strong class="text-gray-800 block text-sm">🤔 What it is:</strong> ${loc.whatItIs}</p>
+                                <p><strong class="text-gray-800 block text-sm">🎯 Perfect for:</strong> ${loc.perfectFor}</p>
+                                <p><strong class="text-gray-800 block text-sm">📋 Know before you go:</strong> ${loc.knowBeforeYouGo}</p>
+                            </div>
+                            <div class="mt-auto p-5 sm:p-6 insider-tip border-t-2 border-dashed border-amber-400">
+                                <p class="text-sm text-amber-900"><strong class="text-amber-900 block font-bold">💡 Insider Tip:</strong> ${loc.insiderTip}</p>
                             </div>
                         </div>
                     `;
@@ -458,3 +464,4 @@
     </script>
 </body>
 </html>
+
