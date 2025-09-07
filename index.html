@@ -626,6 +626,22 @@
             const itineraryContent = document.getElementById('itinerary-content');
             const itineraryArrow = document.getElementById('itinerary-arrow');
 
+            const parseTravelTime = (timeString) => {
+                if (timeString.toLowerCase().includes("varies")) return Infinity;
+                
+                let totalMinutes = 0;
+                const hourMatch = timeString.match(/(\d+)\s*hour/);
+                const minMatch = timeString.match(/(\d+)\s*min/);
+
+                if (hourMatch) {
+                    totalMinutes += parseInt(hourMatch[1]) * 60;
+                }
+                if (minMatch) {
+                    totalMinutes += parseInt(minMatch[1]);
+                }
+                return totalMinutes;
+            };
+
             const renderLocations = (filter) => {
                 grid.innerHTML = '';
                 let filteredData = locationsData;
@@ -635,8 +651,9 @@
                 }
                 
                 filteredData.sort((a, b) => {
-                    const timeA = parseInt(a.travelTime.replace(/[^0-9]/g, '')) || 0;
-                    const timeB = parseInt(b.travelTime.replace(/[^0-9]/g, '')) || 0;
+                    const timeA = parseTravelTime(a.travelTime);
+                    const timeB = parseTravelTime(b.travelTime);
+
                     if(timeA === timeB){
                          return a.name.localeCompare(b.name);
                     }
