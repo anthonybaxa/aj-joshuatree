@@ -101,7 +101,7 @@
 </head>
 <body class="antialiased">
     
-    <div id="sticky-itinerary-bar" class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-lg p-3 z-20 transform -translate-y-full cursor-pointer">
+    <div id="sticky-itinerary-bar" class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-lg p-3 z-30 transform -translate-y-full cursor-pointer">
         <div class="container mx-auto flex justify-center items-center">
             <p id="sticky-itinerary-text" class="font-bold text-gray-800 text-center text-sm sm:text-base"></p>
         </div>
@@ -201,7 +201,7 @@
             </div>
         </section>
 
-        <nav id="navigation" class="sticky top-4 z-10 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
+        <nav id="navigation" class="sticky top-4 z-20 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
             <div class="flex flex-nowrap md:flex-wrap justify-start md:justify-center items-center gap-2 overflow-x-auto no-scrollbar">
                 <button class="nav-btn active px-4 py-2 rounded-full font-semibold text-sm flex-shrink-0" data-filter="all">All Locations</button>
                 <button class="nav-btn px-4 py-2 rounded-full font-semibold text-sm flex-shrink-0" data-filter="Art & Culture">🎨 Art & Culture</button>
@@ -665,6 +665,8 @@
             const itineraryBuilder = document.getElementById('itinerary-builder');
             const copyBtn = document.getElementById('copy-itinerary-btn');
             const copyConfirmation = document.getElementById('copy-confirmation');
+            const stickyItineraryBar = document.getElementById('sticky-itinerary-bar');
+            const stickyItineraryText = document.getElementById('sticky-itinerary-text');
 
             const parseTravelTime = (timeString) => {
                 if (timeString.toLowerCase().includes("varies")) return Infinity;
@@ -783,6 +785,7 @@
                     });
                 }
                 updateCardButtons();
+                updateStickyItineraryBar();
             };
 
             const updateCardButtons = () => {
@@ -800,6 +803,26 @@
                     }
                 });
             };
+
+            const updateStickyItineraryBar = () => {
+                const count = itinerary.length;
+                const builderOffset = itineraryBuilder.offsetTop + itineraryBuilder.offsetHeight;
+                
+                if (count > 0 && window.scrollY > builderOffset) {
+                    stickyItineraryText.textContent = `📅 View My Itinerary (${count}) - Click to Return to Top`;
+                    stickyItineraryBar.classList.remove('-translate-y-full');
+                    nav.style.top = `${stickyItineraryBar.offsetHeight}px`;
+                } else {
+                    stickyItineraryBar.classList.add('-translate-y-full');
+                    nav.style.top = '1rem';
+                }
+            };
+            
+            stickyItineraryBar.addEventListener('click', () => {
+                itineraryBuilder.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', updateStickyItineraryBar);
             
             grid.addEventListener('click', e => {
                 if (e.target.matches('.add-btn')) {
@@ -824,19 +847,6 @@
                 itineraryContent.classList.toggle('open');
                 itineraryArrow.classList.toggle('rotate-180');
             });
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && itinerary.length > 0) {
-                        if (!itineraryContent.classList.contains('open')) {
-                            itineraryContent.classList.add('open');
-                            itineraryArrow.classList.add('rotate-180');
-                        }
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            observer.observe(itineraryBuilder);
             
             copyBtn.addEventListener('click', () => {
                 let itineraryText = "My Joshua Tree Itinerary:\n\n";
