@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Sandstone -->
     <!-- Application Structure Plan: A single-page dashboard with a sticky navigation bar for filtering. The itinerary builder is now "smart," automatically opening when it scrolls into view with items, and is supported by a dedicated sticky header that appears on scroll, providing constant context and a clear call-to-action to return to the top. This solves previous UI clashes while enhancing usability. -->
-    <!-- Visualization & Content Choices: The guide's text-based content is presented using structured HTML. The primary interactions are JavaScript-powered filters and a drag-and-drop itinerary system. The two sticky headers are now managed in tandem by a scroll event listener that dynamically adjusts the `top` offset of the navigation bar to prevent overlap, creating a clean, hierarchical sticky interface. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- Visualization & Content Choices: The guide's text-based content is presented using structured HTML. The primary interactions are JavaScript-powered filters and a drag-and-drop itinerary system. The two sticky headers and the auto-open feature are managed by a combination of a scroll event listener and an IntersectionObserver, creating a robust and intelligent UI. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -847,6 +847,19 @@
                 itineraryContent.classList.toggle('open');
                 itineraryArrow.classList.toggle('rotate-180');
             });
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && itinerary.length > 0) {
+                        if (!itineraryContent.classList.contains('open')) {
+                            itineraryContent.classList.add('open');
+                            itineraryArrow.classList.add('rotate-180');
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(itineraryBuilder);
             
             copyBtn.addEventListener('click', () => {
                 let itineraryText = "My Joshua Tree Itinerary:\n\n";
