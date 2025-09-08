@@ -80,7 +80,7 @@
             padding-bottom: 0;
         }
         #itinerary-content.open {
-            max-height: 1000px; /* Adjust as needed */
+            max-height: 1500px; /* Increased max-height */
             padding-top: 1.5rem;
             padding-bottom: 1.5rem;
         }
@@ -115,6 +115,12 @@
                 Your ultimate companion for an unforgettable desert adventure! This guide focuses on the most unique and exciting experiences that don't require hiking boots—from quirky art to incredible scenic drives.
             </p>
         </header>
+
+        <!-- NEW: Offline Use Reminder -->
+        <section class="mb-8 md:mb-10 bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-r-lg" role="alert">
+            <p class="font-bold">Pro-Tip for the Road</p>
+            <p>Cell service in Joshua Tree is unreliable. Use your browser's "Add to Home Screen" or "Download page" feature now to save this guide for offline use!</p>
+        </section>
 
         <section id="itinerary-builder" class="mb-8 md:mb-10 bg-white rounded-2xl shadow-md border border-gray-200">
             <button id="toggle-itinerary" class="w-full text-left p-4 rounded-t-2xl font-display font-bold text-xl text-gray-800 flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors">
@@ -201,6 +207,11 @@
             </div>
         </section>
 
+        <!-- NEW: Search Bar -->
+        <div class="mb-4">
+             <input type="search" id="search-bar" placeholder="🔎 Search for a specific location..." class="w-full p-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow">
+        </div>
+
         <nav id="navigation" class="sticky top-4 z-20 bg-white/70 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-lg mb-8 md:mb-10">
             <div class="flex flex-nowrap md:flex-wrap justify-start md:justify-center items-center gap-2 overflow-x-auto no-scrollbar">
                 <button class="nav-btn active px-4 py-2 rounded-full font-semibold text-sm flex-shrink-0" data-filter="all">All Locations</button>
@@ -218,8 +229,10 @@
     </div>
 
     <script>
+        // UPDATED: locationsData with `isEveningOuting` property
         const locationsData = [
             {
+                id: "beauty-bubble-salon",
                 name: "Beauty Bubble Salon & Museum",
                 tags: ["Dining & Shopping", "Unique Experiences"],
                 travelTime: "~5 mins",
@@ -227,9 +240,14 @@
                 whatItIs: "A fabulously kitschy spot that's a working salon <em>and</em> a museum packed with 3,000+ pieces of vintage beauty gear.",
                 perfectFor: "Lovers of pop culture, retro style, and wonderfully weird photo ops.",
                 knowBeforeYouGo: "Open Tue-Sat 10am-6pm | Free to browse.",
-                insiderTip: "Even if you’re not getting a beehive hairdo, pop in! The owner is famously friendly and loves to share the hilarious stories behind his collection."
+                insiderTip: "Even if you’re not getting a beehive hairdo, pop in! The owner is famously friendly and loves to share the hilarious stories behind his collection.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "crochet-museum",
                 name: "World Famous Crochet Museum",
                 tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~5 mins",
@@ -237,9 +255,14 @@
                 whatItIs: "A tiny, acid-green photo booth transformed into a wonderfully bizarre museum dedicated to all things crochet.",
                 perfectFor: "A quick, hilarious, and supremely quirky photo op.",
                 knowBeforeYouGo: "Always open to peek into! | Free.",
-                insiderTip: "The museum is part of the 'Art Queen' complex, so explore the other quirky art installations on the same lot."
+                insiderTip: "The museum is part of the 'Art Queen' complex, so explore the other quirky art installations on the same lot.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: true,
+                isEveningOuting: false
             },
             {
+                id: "joshua-tree-coffee",
                 name: "Joshua Tree Coffee Company",
                 tags: ["Dining & Shopping"],
                 travelTime: "~5 mins",
@@ -247,9 +270,14 @@
                 whatItIs: "The legendary local spot for amazing, small-batch organic coffee. The line is a testament to how good it is!",
                 perfectFor: "The perfect morning kickstart.",
                 knowBeforeYouGo: "Open daily, morning/afternoon hours.",
-                insiderTip: "The line moves fast and is totally worth it. Grab a bag of their whole beans to take the taste of Joshua Tree home with you."
+                insiderTip: "The line moves fast and is totally worth it. Grab a bag of their whole beans to take the taste of Joshua Tree home with you.",
+                cost: "$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "joshua-tree-saloon",
                 name: "Joshua Tree Saloon",
                 tags: ["Dining & Shopping"],
                 travelTime: "~5 mins",
@@ -257,9 +285,14 @@
                 whatItIs: "The perfect post-adventure refuel spot! A classic Old West saloon serving up hearty burgers and cold beer.",
                 perfectFor: "A fun, casual meal with a classic desert vibe.",
                 knowBeforeYouGo: "Open daily, late hours | Mid-range.",
-                insiderTip: "You can't go wrong with the Mineshaft Burger and a pint of their own Prickly Pear Blond Ale!"
+                insiderTip: "You can't go wrong with the Mineshaft Burger and a pint of their own Prickly Pear Blond Ale!",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: true
             },
             {
+                id: "hoof-and-horn",
                 name: "Hoof & The Horn",
                 tags: ["Dining & Shopping"],
                 travelTime: "~5 mins",
@@ -267,9 +300,14 @@
                 whatItIs: "A beautifully curated boutique that perfectly captures the modern desert-boho aesthetic.",
                 perfectFor: "Finding that perfect, stylish souvenir or a unique piece of desert-inspired fashion.",
                 knowBeforeYouGo: "Open daily.",
-                insiderTip: "A great place to find high-quality, locally designed t-shirts that go way beyond typical tourist gear."
+                insiderTip: "A great place to find high-quality, locally designed t-shirts that go way beyond typical tourist gear.",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "noah-purifoy-museum",
                 name: "Noah Purifoy Outdoor Desert Art Museum",
                 tags: ["Art & Culture"],
                 travelTime: "~10 mins",
@@ -277,9 +315,14 @@
                 whatItIs: "A sprawling 10-acre wonderland of thought-provoking sculptures built entirely from junk and found objects.",
                 perfectFor: "Art lovers and curious explorers.",
                 knowBeforeYouGo: "Open Daily, sunrise to sunset | Free (donations welcome!). Always watch where you step.",
-                insiderTip: "Don't look for explanation signs. The artist wanted you to have your <em>own</em> unique reaction to his incredible work."
+                insiderTip: "Don't look for explanation signs. The artist wanted you to have your <em>own</em> unique reaction to his incredible work.",
+                cost: "Free",
+                isTopPick: true,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "hi-desert-nature-museum",
                 name: "Hi-Desert Nature Museum",
                 tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~15 mins",
@@ -287,9 +330,14 @@
                 whatItIs: "A super fun crash course in the desert's secrets! Unlock the mysteries of the quirky plants, cool animals, and unique geology that make this place so special.",
                 perfectFor: "Families & curious minds.",
                 knowBeforeYouGo: "Open Wed-Sat 10am-5pm | Free!",
-                insiderTip: "Pair it with a treasure hunt through the antique shops in Old Town Yucca Valley for a perfect afternoon two-fer!"
+                insiderTip: "Pair it with a treasure hunt through the antique shops in Old Town Yucca Valley for a perfect afternoon two-fer!",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "desert-christ-park",
                 name: "Desert Christ Park",
                 tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~15 mins",
@@ -297,9 +345,14 @@
                 whatItIs: "A unique park overlooking Yucca Valley, featuring over 40 large, snow-white sculptures depicting scenes from the life of Christ.",
                 perfectFor: "Those who love roadside attractions, folk art, and unique cultural landmarks.",
                 knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations welcome).",
-                insiderTip: "Visit in the late afternoon when the low sun creates dramatic shadows on the sculptures."
+                insiderTip: "Visit in the late afternoon when the low sun creates dramatic shadows on the sculptures.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "the-copper-room",
                 name: "The Copper Room",
                 tags: ["Dining & Shopping"],
                 travelTime: "~15 mins",
@@ -307,9 +360,14 @@
                 whatItIs: "A trip back in time! A restored 1950s lounge with swanky cocktails and a prime view overlooking the Yucca Valley Airport runway.",
                 perfectFor: "A historic, retro-themed dinner with a cinematic twist.",
                 knowBeforeYouGo: "Open Daily 4pm-10pm | Reservations highly recommended.",
-                insiderTip: "Request a runway view when booking to watch small planes take off against a dramatic desert sunset."
+                insiderTip: "Request a runway view when booking to watch small planes take off against a dramatic desert sunset.",
+                cost: "$$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: true
             },
             {
+                id: "rainbow-stew",
                 name: "Rainbow Stew",
                 tags: ["Dining & Shopping"],
                 travelTime: "~15 mins",
@@ -317,9 +375,14 @@
                 whatItIs: "The epicenter of the 'Hi-Desert' vibe. A magical shop filled with crystals, sage, and a huge collection of local art.",
                 perfectFor: "Finding unique, spiritual gifts and soaking in the local culture.",
                 knowBeforeYouGo: "Open Daily (hours vary).",
-                insiderTip: "Ask the staff about the local artists. Their stories add a personal connection to every piece."
+                insiderTip: "Ask the staff about the local artists. Their stories add a personal connection to every piece.",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "the-end-vintage",
                 name: "The End",
                 tags: ["Dining & Shopping"],
                 travelTime: "~15 mins",
@@ -327,9 +390,14 @@
                 whatItIs: "A legendary vintage store known for its amazing, curated collection of retro clothing and accessories.",
                 perfectFor: "Treasure hunters looking for unique, one-of-a-kind vintage finds.",
                 knowBeforeYouGo: "Open 7 days a week from 11am to 5pm.",
-                insiderTip: "Give yourself plenty of time to dig! The racks are packed with amazing pieces waiting to be discovered."
+                insiderTip: "Give yourself plenty of time to dig! The racks are packed with amazing pieces waiting to be discovered.",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "skys-the-limit",
                 name: "Sky's The Limit Observatory",
                 tags: ["Unique Experiences", "Scenic & Nature"],
                 travelTime: "~15 mins",
@@ -337,9 +405,14 @@
                 whatItIs: "Your personal journey through the cosmos! Peer through powerful telescopes to see distant galaxies and sparkling star clusters.",
                 perfectFor: "A comfy, mind-blowing stargazing adventure for all.",
                 knowBeforeYouGo: "Grounds always open | Monthly star parties require tickets. Wear closed-toed shoes at night.",
-                insiderTip: "Visit during the day and use the QR codes on-site for a fun, self-guided audio tour of the walkable solar system model!"
+                insiderTip: "Visit during the day and use the QR codes on-site for a fun, self-guided audio tour of the walkable solar system model!",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: true
             },
             {
+                id: "jt-visitor-center",
                 name: "Joshua Tree Visitor & Cultural Center",
                 tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~20 mins",
@@ -347,9 +420,14 @@
                 whatItIs: "Mission control for your adventure! This is your essential first stop, featuring a fantastic museum that honors the region's Native American history.",
                 perfectFor: "Literally everyone.",
                 knowBeforeYouGo: "Open Daily 8am-5pm | Free! Last stop for reliable water/restrooms before the north park entrance.",
-                insiderTip: "Spend an hour in the museum <em>before</em> you enter the park. The context it provides will completely change how you see the landscape."
+                insiderTip: "Spend an hour in the museum <em>before</em> you enter the park. The context it provides will completely change how you see the landscape.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "29-palms-art-gallery",
                 name: "29 Palms Art Gallery",
                 tags: ["Art & Culture"],
                 travelTime: "~20 mins",
@@ -357,9 +435,14 @@
                 whatItIs: "Step into the heart of the desert's art scene! The oldest gallery in the area, housed in a charming, historic adobe building.",
                 perfectFor: "Art lovers and history buffs.",
                 knowBeforeYouGo: "Open Fri-Sun 11am-3pm | Free!",
-                insiderTip: "Check their schedule for a monthly artist reception. It's a fantastic chance to mingle with local creatives."
+                insiderTip: "Check their schedule for a monthly artist reception. It's a fantastic chance to mingle with local creatives.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "29-palms-creative-center",
                 name: "29 Palms Creative Center",
                 tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~20 mins",
@@ -367,9 +450,14 @@
                 whatItIs: "Unleash your inner artist! Offers fun, one-off classes like pottery and painting in a cool, air-conditioned studio.",
                 perfectFor: "A unique, hands-on souvenir-making session.",
                 knowBeforeYouGo: "By appointment only | Costs vary ($45+).",
-                insiderTip: "For a memorable group activity, book a private 'Neon Black Light Painting Party'!"
+                insiderTip: "For a memorable group activity, book a private 'Neon Black Light Painting Party'!",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "29-palms-inn",
                 name: "29 Palms Inn",
                 tags: ["Dining & Shopping"],
                 travelTime: "~20 mins",
@@ -377,9 +465,14 @@
                 whatItIs: "Dinner in a literal oasis. This historic inn offers an upscale meal in a lush, romantic garden, often with live music.",
                 perfectFor: "A romantic dinner or a special occasion.",
                 knowBeforeYouGo: "Open Wed-Sun for dinner | Reservations highly recommended.",
-                insiderTip: "Arrive before sunset to wander the beautiful grounds and the adjacent Oasis of Mara."
+                insiderTip: "Arrive before sunset to wander the beautiful grounds and the adjacent Oasis of Mara.",
+                cost: "$$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: true
             },
             {
+                id: "oasis-of-murals",
                 name: "Oasis of Murals (Self-Guided Tour)",
                 tags: ["Art & Culture"],
                 travelTime: "~20 mins",
@@ -387,9 +480,14 @@
                 whatItIs: "An art safari in your car! Hunt for over 26 massive murals that tell the story of the region's history.",
                 perfectFor: "A flexible driving tour on a hot or windy day.",
                 knowBeforeYouGo: "Viewable anytime | Free.",
-                insiderTip: "Grab a physical map from the Visitor Center for the fascinating history behind each mural."
+                insiderTip: "Grab a physical map from the Visitor Center for the fascinating history behind each mural.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "big-morongo-canyon",
                 name: "Big Morongo Canyon Preserve",
                 tags: ["Scenic & Nature"],
                 travelTime: "~20 mins",
@@ -397,9 +495,14 @@
                 whatItIs: "A lush, green oasis that's a world away from the desert. A bird-watching paradise with accessible, shaded boardwalk trails.",
                 perfectFor: "A relaxing, cool, and easy nature walk, especially on a warm day.",
                 knowBeforeYouGo: "Open daily, 7:30 am to sunset | Free (donations appreciated).",
-                insiderTip: "Bring binoculars! This is one of the best birding spots in California."
+                insiderTip: "Bring binoculars! This is one of the best birding spots in California.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: true,
+                isEveningOuting: false
             },
             {
+                id: "skull-rock",
                 name: "Skull Rock",
                 tags: ["Scenic & Nature"],
                 travelTime: "~20 mins",
@@ -407,9 +510,14 @@
                 whatItIs: "The park's most famous rock star! Wind and rain have carved this boulder into an uncanny resemblance of a human skull.",
                 perfectFor: "A quick, classic photo op that's a must-do.",
                 knowBeforeYouGo: "Located right off Park Boulevard | Park entrance fee required.",
-                insiderTip: "Parking is tight. If full, park at Jumbo Rocks Campground and take a very short walk."
+                insiderTip: "Parking is tight. If full, park at Jumbo Rocks Campground and take a very short walk.",
+                cost: "$",
+                isTopPick: true,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "horseback-riding",
                 name: "Horseback Riding",
                 tags: ["Unique Experiences"],
                 travelTime: "~20 mins",
@@ -417,9 +525,14 @@
                 whatItIs: "Saddle up, partner! See the Mojave Desert like a real cowboy on a guided tour.",
                 perfectFor: "A memorable adventure for all skill levels.",
                 knowBeforeYouGo: "Local ranches offer guided tours. Book in advance.",
-                insiderTip: "A sunset ride is an absolutely magical experience, offering incredible views and photo opportunities."
+                insiderTip: "A sunset ride is an absolutely magical experience, offering incredible views and photo opportunities.",
+                cost: "$$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "integratron",
                 name: "The Integratron",
                 tags: ["Unique Experiences"],
                 travelTime: "~25 mins",
@@ -427,9 +540,14 @@
                 whatItIs: "An experience you'll talk about forever. Relax in a world-famous, acoustically perfect dome for an unforgettable 'Sound Bath.'",
                 perfectFor: "Anyone seeking deep relaxation or a truly unique experience.",
                 knowBeforeYouGo: "Open Thu-Sun | ~$55/person | <strong>Reservations are essential and sell out MONTHS in advance.</strong>",
-                insiderTip: "Can't get a ticket? You can often still visit the grounds to see the incredible structure from the outside."
+                insiderTip: "Can't get a ticket? You can often still visit the grounds to see the incredible structure from the outside.",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "mazamar-pottery",
                 name: "MazAmar Art Pottery",
                 tags: ["Dining & Shopping", "Art & Culture"],
                 travelTime: "~25 mins",
@@ -437,9 +555,14 @@
                 whatItIs: "A working pottery studio on Pioneertown's iconic Mane Street, famous for their 'Joshua Tree Mugs'.",
                 perfectFor: "Taking a fun, accessible pottery class in a truly unique Old West setting.",
                 knowBeforeYouGo: "Studio store open daily | Classes must be scheduled in advance.",
-                insiderTip: "Book a class well in advance, especially for a weekend, then browse the gallery."
+                insiderTip: "Book a class well in advance, especially for a weekend, then browse the gallery.",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "la-copine",
                 name: "La Copine Kitchen",
                 tags: ["Dining & Shopping"],
                 travelTime: "~25 mins",
@@ -447,9 +570,14 @@
                 whatItIs: "A culinary pilgrimage! This nationally acclaimed restaurant serves an inventive menu that's 100% worth the drive.",
                 perfectFor: "Foodies looking for an unforgettable meal.",
                 knowBeforeYouGo: "Open Thu-Sun 11am-4pm | No reservations.",
-                insiderTip: "To minimize the wait, go on a Thursday or arrive right when they open."
+                insiderTip: "To minimize the wait, go on a Thursday or arrive right when they open.",
+                cost: "$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "pappy-and-harriets",
                 name: "Pappy & Harriet's Pioneertown Palace",
                 tags: ["Dining & Shopping", "Unique Experiences"],
                 travelTime: "~25 mins",
@@ -457,9 +585,14 @@
                 whatItIs: "One of the most famous desert venues in the world. A legendary BBQ joint and live music spot.",
                 perfectFor: "A rowdy, fun night of great food, live music, and authentic desert culture.",
                 knowBeforeYouGo: "Open Thu-Sun | Dinner reservations and advance music tickets are essential.",
-                insiderTip: "Even without show tickets, you can often grab a drink at the bar and soak in the historic atmosphere."
+                insiderTip: "Even without show tickets, you can often grab a drink at the bar and soak in the historic atmosphere.",
+                cost: "$$",
+                isTopPick: true,
+                isHiddenGem: false,
+                isEveningOuting: true
             },
             {
+                id: "pioneertown",
                 name: "Pioneertown",
                 tags: ["History & Landmarks", "Unique Experiences"],
                 travelTime: "~25 mins",
@@ -467,9 +600,14 @@
                 whatItIs: "A real 1880s Old West movie set you can walk through, featuring classic storefronts and fun shops.",
                 perfectFor: "History buffs, film lovers, and music fans.",
                 knowBeforeYouGo: "Mane Street is always open | Free to visit.",
-                insiderTip: "Visit on a weekend for the liveliest atmosphere and a possible Wild West show!"
+                insiderTip: "Visit on a weekend for the liveliest atmosphere and a possible Wild West show!",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "glass-outhouse",
                 name: "The Glass Outhouse Art Gallery",
                 tags: ["Art & Culture", "Unique Experiences"],
                 travelTime: "~30 mins",
@@ -477,9 +615,14 @@
                 whatItIs: "A whimsical outdoor playground of surreal, humorous folk art, complete with a functional outhouse made of one-way mirrors.",
                 perfectFor: "Anyone who loves quirky art and fantastic photo ops.",
                 knowBeforeYouGo: "Outdoor art is always accessible | Free.",
-                insiderTip: "If you see the owner, say hello! She has fascinating stories about creating this beloved local landmark."
+                insiderTip: "If you see the owner, say hello! She has fascinating stories about creating this beloved local landmark.",
+                cost: "Free",
+                isTopPick: false,
+                isHiddenGem: true,
+                isEveningOuting: false
             },
             {
+                id: "keys-view",
                 name: "Keys View",
                 tags: ["Scenic & Nature"],
                 travelTime: "~40 mins",
@@ -487,9 +630,14 @@
                 whatItIs: "The ultimate panorama! Drive up for a breathtaking view of the entire Coachella Valley and the San Andreas Fault.",
                 perfectFor: "Everyone. The paved loop makes this incredible view accessible to all.",
                 knowBeforeYouGo: "Open 24/7 (road permitting) | Park entrance fee required.",
-                insiderTip: "It's <em>always</em> colder and windier up here. Bring an extra layer, even on a warm day."
+                insiderTip: "It's <em>always</em> colder and windier up here. Bring an extra layer, even on a warm day.",
+                cost: "$",
+                isTopPick: true,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "cabots-pueblo",
                 name: "Cabot's Pueblo Museum",
                 tags: ["Art & Culture", "History & Landmarks"],
                 travelTime: "~45 mins",
@@ -497,9 +645,14 @@
                 whatItIs: "A jaw-dropping masterpiece of ingenuity! Explore a massive, multi-level pueblo hand-built by a local pioneer from reclaimed materials.",
                 perfectFor: "Anyone who loves unique architecture and incredible stories.",
                 knowBeforeYouGo: "Open Tue-Sat 9am-1pm | ~$13 admission.",
-                insiderTip: "<strong>Absolutely take the guided tour.</strong> The docents tell wild stories about the founder's adventurous life that you won't get anywhere else."
+                insiderTip: "<strong>Absolutely take the guided tour.</strong> The docents tell wild stories about the founder's adventurous life that you won't get anywhere else.",
+                cost: "$",
+                isTopPick: false,
+                isHiddenGem: true,
+                isEveningOuting: false
             },
             {
+                id: "cholla-cactus-garden",
                 name: "Cholla Cactus Garden",
                 tags: ["Scenic & Nature"],
                 travelTime: "~45 mins",
@@ -507,9 +660,14 @@
                 whatItIs: "A beautiful and slightly dangerous cactus forest! Filled with 'teddy bear cholla,' but be warned—their spines detach easily.",
                 perfectFor: "Photographers and thrill-seekers. <strong>WARNING: DO NOT TOUCH THE CACTI.</strong>",
                 knowBeforeYouGo: "Open 24/7 | Park entrance fee required. Wear closed-toed shoes.",
-                insiderTip: "<strong>Go at sunrise or sunset.</strong> The low-angle light makes the cactus spines glow as if they're lit from within."
+                insiderTip: "<strong>Go at sunrise or sunset.</strong> The low-angle light makes the cactus spines glow as if they're lit from within.",
+                cost: "$",
+                isTopPick: true,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
             {
+                id: "offroading",
                 name: "Offroading Adventure",
                 tags: ["Unique Experiences"],
                 travelTime: "Varies",
@@ -517,138 +675,12 @@
                 whatItIs: "Explore the park's rugged backcountry on wheels! A 4x4 adventure lets you discover remote dirt roads.",
                 perfectFor: "Adventure seekers who want to get off the beaten path.",
                 knowBeforeYouGo: "Many dirt roads are open to 4-wheel drive vehicles. Tours are available.",
-                insiderTip: "Before you go, make sure your vehicle's tank is full and your tires are in good shape. Always have extra water in the car."
+                insiderTip: "Before you go, make sure your vehicle's tank is full and your tires are in good shape. Always have extra water in the car.",
+                cost: "$$$",
+                isTopPick: false,
+                isHiddenGem: false,
+                isEveningOuting: false
             },
-            {
-                name: "Cabazon Dinosaurs & Desert Hills Outlets",
-                tags: ["Unique Experiences", "Dining & Shopping"],
-                travelTime: "~1 hour",
-                direction: "W",
-                whatItIs: "A classic California roadside attraction! Take photos with the massive, iconic T-Rex and Brontosaurus sculptures.",
-                perfectFor: "A fun photo-op followed by some serious retail therapy at the huge outlet mall next door.",
-                knowBeforeYouGo: "Dinos open daily 9am-6pm, ~$15 admission. Outlets have standard mall hours.",
-                insiderTip: "Stop at the famous Hadley Fruit Orchards just down the road for one of their legendary date shakes—a quintessential SoCal treat."
-            },
-            {
-                name: "Palm Springs Air Museum",
-                tags: ["Art & Culture", "History & Landmarks"],
-                travelTime: "~1 hour",
-                direction: "W",
-                whatItIs: "A world-class aviation museum featuring one of the largest collections of flyable WWII aircraft in the world.",
-                perfectFor: "History buffs, aviation enthusiasts, and a great indoor activity on a hot day.",
-                knowBeforeYouGo: "Open daily 10am-5pm | ~$25 admission.",
-                insiderTip: "Many of the volunteer docents are veterans who flew these types of planes and have incredible firsthand stories to share."
-            },
-            {
-                name: "Downtown Palm Springs & Moorten Botanical Garden",
-                tags: ["Dining & Shopping", "Scenic & Nature"],
-                travelTime: "~1 hour",
-                direction: "W",
-                whatItIs: "A perfect one-two punch of city and nature. Explore chic boutiques and mid-century modern architecture, then visit the charming 'Cactarium'.",
-                perfectFor: "A stylish day of shopping, architecture, and unique desert flora.",
-                knowBeforeYouGo: "Botanical Garden has seasonal hours and ~$7 admission.",
-                insiderTip: "The Moorten Botanical Garden is family-owned and has a very personal, magical feel you won't find at larger gardens."
-            },
-            {
-                name: "Palm Springs Aerial Tramway",
-                tags: ["Scenic & Nature", "Unique Experiences"],
-                travelTime: "~1 hour",
-                direction: "W",
-                whatItIs: "Ride the world's largest rotating tram car up the sheer cliffs of Chino Canyon. The views are spectacular.",
-                perfectFor: "Epic views, escaping the desert heat, and a truly unique experience.",
-                knowBeforeYouGo: "Open daily | Tickets are ~$35/person | Book in advance.",
-                insiderTip: "The temperature at the top is often 30-40 degrees cooler than the desert floor. Bring a jacket!"
-            },
-            {
-                name: "The Living Desert Zoo & Sunnylands",
-                tags: ["Scenic & Nature", "Art & Culture"],
-                travelTime: "~1 hour 15 mins",
-                direction: "SW",
-                whatItIs: "A trifecta of attractions. See desert animals at the Zoo, window-shop on El Paseo, and tour the stunning Sunnylands estate.",
-                perfectFor: "A full day of diverse activities, from wildlife to luxury shopping to historic architecture.",
-                knowBeforeYouGo: "Zoo has seasonal hours, ~$40 admission. Sunnylands Center & Gardens is free to visit (Wed-Sun).",
-                insiderTip: "Sunnylands is known as the 'Camp David of the West' for hosting presidents and world leaders. The free garden tour is fantastic."
-            },
-            {
-                name: "Idyllwild",
-                tags: ["Scenic & Nature", "Dining & Shopping"],
-                travelTime: "~1 hour 15 mins",
-                direction: "W",
-                whatItIs: "Escape the desert heat by driving up into the mountains to this artsy, quiet village nestled in the pines.",
-                perfectFor: "A complete change of scenery, with charming shops, art galleries, and a cool mountain breeze.",
-                knowBeforeYouGo: "The drive up the mountain is scenic but winding. Check road conditions in winter.",
-                insiderTip: "Idyllwild is a great place for a leisurely lunch at one of its many cozy cafes and restaurants."
-            },
-            {
-                name: "Amboy Crater & Roy's Motel",
-                tags: ["History & Landmarks", "Unique Experiences"],
-                travelTime: "~1 hour 30 mins",
-                direction: "E",
-                whatItIs: "A perfectly preserved slice of iconic Route 66 history. Roy's Motel and Café is a legendary photo op.",
-                perfectFor: "Road trip enthusiasts and photographers looking for that classic Americana vibe.",
-                knowBeforeYouGo: "This is a very remote area. Ensure you have a full tank of gas and plenty of water.",
-                insiderTip: "The sense of isolation and history at Roy's is palpable. It feels like stepping onto a movie set."
-            },
-            {
-                name: "Calico Ghost Town",
-                tags: ["History & Landmarks", "Unique Experiences"],
-                travelTime: "~1 hour 45 mins",
-                direction: "NE",
-                whatItIs: "A real 1880s silver mining town restored as a family-friendly attraction with gunfights, mine tours, and Old West shops.",
-                perfectFor: "Families and anyone who loves Old West history.",
-                knowBeforeYouGo: "Open daily 9am-5pm | ~$8 admission.",
-                insiderTip: "Wear comfortable shoes as you'll be walking on wooden boardwalks and dirt roads."
-            },
-            {
-                name: "Kelso Dunes & Mojave National Preserve",
-                tags: ["Scenic & Nature"],
-                travelTime: "~1 hour 45 mins",
-                direction: "NE",
-                whatItIs: "Explore the vast, rugged, and less-visited Mojave National Preserve, featuring massive, 'singing' sand dunes.",
-                perfectFor: "Adventurers looking for solitude and dramatic, otherworldly landscapes.",
-                knowBeforeYouGo: "Services are non-existent. This is a trip for the well-prepared with a reliable vehicle.",
-                insiderTip: "The 'boom' of the singing dunes is a real phenomenon caused by shifting sands. It's an unforgettable sound if you're lucky enough to hear it."
-            },
-            {
-                name: "Salton Sea & Bombay Beach",
-                tags: ["Scenic & Nature", "Art & Culture"],
-                travelTime: "~1 hour 45 mins",
-                direction: "SE",
-                whatItIs: "A hauntingly beautiful, post-apocalyptic landscape. The decaying shores have become a hub for bizarre and fascinating outsider art.",
-                perfectFor: "Photographers and explorers drawn to surreal, unconventional beauty.",
-                knowBeforeYouGo: "The area has a distinct smell due to the sea's salinity and history. Be prepared for a unique sensory experience.",
-                insiderTip: "Drive slowly through the residential parts of Bombay Beach to see the incredible art installations created by its residents."
-            },
-            {
-                name: "Galleta Meadows Sculptures",
-                tags: ["Art & Culture", "Scenic & Nature"],
-                travelTime: "~1 hour 45 mins",
-                direction: "S",
-                whatItIs: "A surreal art safari through the desert of Borrego Springs, with 130+ giant metal sculptures of prehistoric creatures.",
-                perfectFor: "A whimsical and unforgettable treasure hunt for art lovers and families.",
-                knowBeforeYouGo: "The sculptures are spread out over several miles. Pick up a map in town to find them all.",
-                insiderTip: "The 350-foot-long sea serpent that appears to dive under the road is the most impressive sculpture—a must-see."
-            },
-            {
-                name: "Old Town Temecula & Wine Country",
-                tags: ["Dining & Shopping", "History & Landmarks"],
-                travelTime: "~1 hour 45 mins",
-                direction: "SW",
-                whatItIs: "Spend a day in wine country! Explore rustic Old Town's storefronts, then drive through rolling hills for wine tasting.",
-                perfectFor: "A relaxing day of good food, wine tasting, and boutique shopping.",
-                knowBeforeYouGo: "Most wineries are open daily. Old Town has a popular Saturday farmers market.",
-                insiderTip: "Many wineries offer beautiful patios with stunning views, perfect for a picnic lunch."
-            },
-            {
-                name: "Salvation Mountain",
-                tags: ["Art & Culture", "Unique Experiences"],
-                travelTime: "~1 hour 45 mins",
-                direction: "SE",
-                whatItIs: "A mind-blowing explosion of color and devotion! A massive, man-made mountain of adobe and paint.",
-                perfectFor: "Lovers of folk art, surreal landscapes, and unforgettable photo ops.",
-                knowBeforeYouGo: "Open daily, sunrise to sunset | Free (donations are vital!).",
-                insiderTip: "This is a significant drive, best planned as a full day trip. Bring plenty of water and sun protection."
-            }
         ];
         
         let itinerary = [];
@@ -667,6 +699,7 @@
             const copyConfirmation = document.getElementById('copy-confirmation');
             const stickyItineraryBar = document.getElementById('sticky-itinerary-bar');
             const stickyItineraryText = document.getElementById('sticky-itinerary-text');
+            const searchBar = document.getElementById('search-bar'); // NEW: Search bar element
 
             const parseTravelTime = (timeString) => {
                 if (timeString.toLowerCase().includes("varies")) return Infinity;
@@ -684,12 +717,19 @@
                 return totalMinutes;
             };
 
-            const renderLocations = (filter) => {
+            const renderLocations = (filter = 'all', searchTerm = '') => { // UPDATED: Accept search term
                 grid.innerHTML = '';
                 let filteredData = locationsData;
+                
+                // NEW: Search functionality
+                if (searchTerm) {
+                    filteredData = filteredData.filter(loc => 
+                        loc.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
 
                 if (filter !== 'all') {
-                    filteredData = locationsData.filter(loc => loc.tags.includes(filter));
+                    filteredData = filteredData.filter(loc => loc.tags.includes(filter));
                 }
                 
                 filteredData.sort((a, b) => {
@@ -702,16 +742,37 @@
                     return timeA - timeB;
                 });
 
+                if (filteredData.length === 0) {
+                    grid.innerHTML = `<p class="text-center text-gray-500 md:col-span-2 lg:col-span-3">No locations match your search or filter.</p>`;
+                    return;
+                }
+
                 filteredData.forEach(loc => {
-                    const isInItinerary = itinerary.some(item => item.name === loc.name);
+                    const isInItinerary = itinerary.some(item => item.id === loc.id);
                     const buttonText = isInItinerary ? 'Added ✔' : 'Add to Itinerary +';
                     const buttonClasses = isInItinerary ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white font-display';
                     
+                    // UPDATED: All badge types
+                    const topPickBadge = loc.isTopPick ? `<span class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-2xl shadow-md">⭐ Top Pick</span>` : '';
+                    const hiddenGemBadge = loc.isHiddenGem ? `<span class="absolute top-0 right-0 bg-cyan-400 text-cyan-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-2xl shadow-md">💎 Hidden Gem</span>` : '';
+                    const eveningOutingBadge = loc.isEveningOuting ? `<span class="absolute top-0 right-0 bg-indigo-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-2xl shadow-md">🌙 Evening Outing</span>` : '';
+
+                    const costDisplay = `<span class="text-sm font-bold px-2 py-1 rounded-md ${loc.cost === 'Free' ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-800'}">${loc.cost}</span>`;
+                    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.name)}`;
+                    
                     const card = `
-                        <div class="location-card flex flex-col rounded-2xl shadow-sm overflow-hidden">
+                        <div class="location-card flex flex-col rounded-2xl shadow-sm overflow-hidden relative">
+                             ${topPickBadge}
+                             ${hiddenGemBadge}
+                             ${eveningOutingBadge}
                             <div class="p-5 sm:p-6 bg-amber-50 border-b border-amber-200">
-                                <h3 class="text-lg sm:text-xl font-bold text-gray-800">${loc.name}</h3>
-                                <p class="text-sm text-gray-500 font-medium">🚗 ${loc.travelTime} <span class="font-bold">${loc.direction}</span></p>
+                                <h3 class="text-lg sm:text-xl font-bold text-gray-800 pr-4">
+                                    <a href="${mapsLink}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">${loc.name}</a>
+                                </h3>
+                                <div class="flex justify-between items-center mt-1">
+                                    <p class="text-sm text-gray-500 font-medium">🚗 ${loc.travelTime} <span class="font-bold">${loc.direction}</span></p>
+                                    ${costDisplay}
+                                </div>
                             </div>
                             <div class="p-5 sm:p-6 space-y-5 text-base text-gray-700 flex-grow">
                                 <div class="flex items-start gap-3">
@@ -746,13 +807,40 @@
                                 </div>
                             </div>
                             <div class="p-4 bg-gray-50 border-t">
-                                <button data-name="${loc.name}" class="add-btn w-full px-4 py-2 font-bold rounded-lg ${buttonClasses}">${buttonText}</button>
+                                <button data-id="${loc.id}" class="add-btn w-full px-4 py-2 font-bold rounded-lg ${buttonClasses}">${buttonText}</button>
                             </div>
                         </div>
                     `;
                     grid.innerHTML += card;
                 });
             };
+            
+            // NEW: Function to update URL with itinerary
+            const updateURLHash = () => {
+                if (itinerary.length > 0) {
+                    const itineraryIds = itinerary.map(loc => loc.id).join(',');
+                    window.location.hash = `#plan=${itineraryIds}`;
+                } else {
+                    // Removes hash from URL if history.pushState is supported, otherwise sets to empty
+                    if (history.pushState) {
+                        history.pushState("", document.title, window.location.pathname + window.location.search);
+                    } else {
+                        window.location.hash = '';
+                    }
+                }
+            };
+
+            // NEW: Function to read itinerary from URL on load
+            const readURLHash = () => {
+                const hash = window.location.hash;
+                if (hash && hash.startsWith('#plan=')) {
+                    const itineraryIds = hash.substring(6).split(',');
+                    const loadedItinerary = itineraryIds.map(id => locationsData.find(loc => loc.id === id)).filter(Boolean); // filter(Boolean) removes any nulls if an ID is invalid
+                    itinerary = loadedItinerary;
+                    renderItinerary();
+                }
+            };
+
 
             const renderItinerary = () => {
                 itineraryList.innerHTML = '';
@@ -769,7 +857,7 @@
                         const item = document.createElement('div');
                         item.className = 'itinerary-item flex items-center justify-between p-3 rounded-lg shadow-sm';
                         item.setAttribute('draggable', true);
-                        item.dataset.name = loc.name;
+                        item.dataset.id = loc.id;
                         item.innerHTML = `
                             <div class="flex items-center gap-4">
                                 <span class="drag-handle text-gray-400 cursor-grab touch-none text-xl">☰</span>
@@ -779,20 +867,21 @@
                                     <p class="text-sm text-gray-500">${loc.travelTime} ${loc.direction}</p>
                                 </div>
                             </div>
-                            <button data-name="${loc.name}" class="remove-btn text-red-500 hover:text-red-700 font-bold text-2xl pr-2">&times;</button>
+                            <button data-id="${loc.id}" class="remove-btn text-red-500 hover:text-red-700 font-bold text-2xl pr-2">&times;</button>
                         `;
                         itineraryList.appendChild(item);
                     });
                 }
                 updateCardButtons();
                 updateStickyItineraryBar();
+                updateURLHash(); // NEW: Update URL whenever itinerary changes
             };
 
             const updateCardButtons = () => {
                 const addButtons = document.querySelectorAll('.add-btn');
                 addButtons.forEach(btn => {
-                    const locationName = btn.dataset.name;
-                    if (itinerary.some(item => item.name === locationName)) {
+                    const locationId = btn.dataset.id;
+                    if (itinerary.some(item => item.id === locationId)) {
                         btn.textContent = 'Added ✔';
                         btn.disabled = true;
                         btn.className = 'add-btn w-full px-4 py-2 font-bold rounded-lg transition-colors bg-green-500 text-white cursor-not-allowed';
@@ -826,9 +915,9 @@
             
             grid.addEventListener('click', e => {
                 if (e.target.matches('.add-btn')) {
-                    const locationName = e.target.dataset.name;
-                    if (!itinerary.some(item => item.name === locationName)) {
-                        const location = locationsData.find(loc => loc.name === locationName);
+                    const locationId = e.target.dataset.id;
+                    if (!itinerary.some(item => item.id === locationId)) {
+                        const location = locationsData.find(loc => loc.id === locationId);
                         itinerary.push(location);
                         renderItinerary();
                     }
@@ -837,8 +926,8 @@
 
             itineraryList.addEventListener('click', e => {
                 if (e.target.matches('.remove-btn')) {
-                    const locationName = e.target.dataset.name;
-                    itinerary = itinerary.filter(item => item.name !== locationName);
+                    const locationId = e.target.dataset.id;
+                    itinerary = itinerary.filter(item => item.id !== locationId);
                     renderItinerary();
                 }
             });
@@ -866,7 +955,10 @@
                 itinerary.forEach((loc, index) => {
                     itineraryText += `${index + 1}. ${loc.name} (${loc.travelTime} ${loc.direction})\n`;
                 });
-                
+
+                // NEW: Add shareable link to copied text
+                itineraryText += `\nShare this plan: ${window.location.href}`;
+
                 const tempTextArea = document.createElement('textarea');
                 tempTextArea.value = itineraryText;
                 document.body.appendChild(tempTextArea);
@@ -912,8 +1004,8 @@
             itineraryList.addEventListener('drop', e => {
                 e.preventDefault();
                 if(draggedItem){
-                    const newOrderNames = [...itineraryList.querySelectorAll('.itinerary-item')].map(item => item.dataset.name);
-                    itinerary.sort((a, b) => newOrderNames.indexOf(a.name) - newOrderNames.indexOf(b.name));
+                    const newOrderIds = [...itineraryList.querySelectorAll('.itinerary-item')].map(item => item.dataset.id);
+                    itinerary.sort((a, b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id));
                     renderItinerary();
                 }
             });
@@ -940,8 +1032,8 @@
             itineraryList.addEventListener('touchend', () => {
                 if(!draggedItem) return;
                 draggedItem.classList.remove('touch-dragging');
-                const newOrderNames = [...itineraryList.querySelectorAll('.itinerary-item')].map(item => item.dataset.name);
-                itinerary.sort((a, b) => newOrderNames.indexOf(a.name) - newOrderNames.indexOf(b.name));
+                const newOrderIds = [...itineraryList.querySelectorAll('.itinerary-item')].map(item => item.dataset.id);
+                itinerary.sort((a, b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id));
                 renderItinerary();
                 draggedItem = null;
             });
@@ -965,12 +1057,24 @@
                     const filter = e.target.dataset.filter;
                     navButtons.forEach(btn => btn.classList.remove('active'));
                     e.target.classList.add('active');
-                    renderLocations(filter);
+                    renderLocations(filter, searchBar.value);
                 }
             });
+            
+            // NEW: Search bar event listener
+            searchBar.addEventListener('input', () => {
+                const activeFilter = document.querySelector('.nav-btn.active').dataset.filter;
+                renderLocations(activeFilter, searchBar.value);
+            });
 
-            renderLocations('all');
-            renderItinerary();
+            // --- INITIALIZATION ---
+            readURLHash(); // Load itinerary from URL first
+            renderLocations('all'); // Then render all locations
+            if (itinerary.length > 0) {
+                 renderItinerary(); // Re-render itinerary to ensure consistency if loaded from URL
+            } else {
+                 renderItinerary(); // Standard initial render if no URL hash
+            }
         });
     </script>
 </body>
